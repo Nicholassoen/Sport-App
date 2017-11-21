@@ -6,7 +6,7 @@ var surprise = false;
 var returnKnap;
 function preload() 
 {
-	surpriseIcon = loadImage("6025473.png");
+	surpriseIcon = loadImage("kartofler.png");
 	fbIcon = loadImage("soccer.png");
 }
 
