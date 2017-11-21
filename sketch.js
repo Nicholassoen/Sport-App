@@ -1,9 +1,11 @@
 var showMenu = true;
 var soccerActivated = false;
 var fbIcon;
-
+var supriseIcon;
+var suprise = false;
 function preload() 
 {
+	supriseIcon = loadImage("6025473.png");
 	fbIcon = loadImage("soccer.png");
 }
 
@@ -11,13 +13,14 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
 	football1 = new football();
+	returnKnap = new returnButton();
 } 
 
 function windowResized() 
 {
 	resizeCanvas(windowWidth, windowHeight);
 }
-var i1 = 0;
+
 function draw() { 
   background(220);
 	if (showMenu == true) 
@@ -29,8 +32,13 @@ function draw() {
 	{
 		football1.display();
 	}
-	var col = cooldown(i1);
-	print(col);
+	
+	if (i1 > 0) i1--;
+	print(i1);
+	if (suprise == true) 
+	{
+		image(supriseIcon, 200, 200);
+	}
 }
 
 function mousePressed() 
@@ -78,18 +86,7 @@ function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amou
 	}
 	return closeX, closeY;
 }
-function cooldown(timer) 
-{
-	if (timer > 0) 
-	{
-		timer--;
-	}
-	if (timer == 0) 
-	{
-		timer = 60;
-	}
-	return timer;
-}
+
 
 function startButton() 
 {
@@ -110,7 +107,7 @@ function startButton()
 		print(c);
 	}
 }
-
+var i1 = 0;
 function football() 
 {
 	this.score = 0;
@@ -129,21 +126,34 @@ function football()
 		rect(this.player2x, this.playery, this.w, this.h); //player 2
 		text(this.score + " - " + this.score2, width/2, height/2);
 	}
-	
 	this.collide = function() 
 	{
 		var c = circleCollision(this.player1x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
-		if (c == true) 
+		if (c == true && i1 == 0) 
 		{
 			this.score++;
+			i1 = 20;
 		}
 		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
-		if (c2 == true) 
+		if (c2 == true && i1 == 0) 
 		{
 			this.score2++;
+			i1 = 10;
 		}
+	}
+}
+function returnButton() 
+{
+	this.x = 0;
+	this.y = height;
+	this.w = width/3;
+	this.h = 40;
+	
+	this.display = function() 
+	{
+		rect(this.x, this.y, this.w, this.h);
 	}
 }
 
