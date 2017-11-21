@@ -3,6 +3,7 @@ var soccerActivated = false;
 var fbIcon;
 var supriseIcon;
 var suprise = false;
+var returnKnap;
 function preload() 
 {
 	supriseIcon = loadImage("6025473.png");
@@ -31,6 +32,7 @@ function draw() {
 	if (soccerActivated == true) 
 	{
 		football1.display();
+		returnKnap.display();
 	}
 	
 	if (i1 > 0) i1--;
@@ -149,7 +151,7 @@ function returnButton()
 	this.x = 0;
 	this.y = height;
 	this.w = width/3;
-	this.h = 40;
+	this.h = 200;
 	
 	this.display = function() 
 	{
