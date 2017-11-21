@@ -119,7 +119,7 @@ function football()
 	this.w = 300;
 	this.h = 300;
 	
-	this.display = function() //TESTTT
+	this.display = function()
 	{
 		textSize(40);
 		rect(this.player1x, this.playery, this.w, this.h); //player 1
