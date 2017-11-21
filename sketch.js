@@ -2,8 +2,7 @@ var showMenu = true;
 var soccerActivated = false;
 var fbIcon;
 var supriseIcon;
-var suprise = false;
-var returnKnap;
+var surprise = false;
 function preload() 
 {
 	supriseIcon = loadImage("6025473.png");
@@ -24,7 +23,7 @@ function windowResized()
 
 function draw() { 
   background(220);
-	if (showMenu == true) 
+	if (showMenu == true)  
 	{
 		startButton1.display();
 	}
@@ -36,8 +35,7 @@ function draw() {
 	}
 	
 	if (i1 > 0) i1--;
-	print(i1);
-	if (suprise == true) 
+	if (surprise == true) 
 	{
 		image(supriseIcon, 200, 200);
 	}
@@ -149,13 +147,14 @@ function football()
 function returnButton() 
 {
 	this.x = 0;
-	this.y = height;
-	this.w = width/3;
-	this.h = 200;
+	this.y = 200;
+	this.w = width;
+	this.h = 500;
 	
 	this.display = function() 
 	{
 		rect(this.x, this.y, this.w, this.h);
+		print("alive");
 	}
 }
 
