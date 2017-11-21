@@ -24,7 +24,7 @@ function windowResized()
 
 function draw() { 
   background(220);
-	if (showMenu == true) 
+	if (showMenu == true)  
 	{
 		startButton1.display();
 	}
@@ -36,7 +36,6 @@ function draw() {
 	}
 	
 	if (i1 > 0) i1--;
-
 	if (surprise == true) 
 	{
 		image(surpriseIcon, 200, 200);
@@ -149,13 +148,14 @@ function football()
 function returnButton() 
 {
 	this.x = 0;
-	this.y = height;
-	this.w = width/3;
-	this.h = 200;
+	this.y = 200;
+	this.w = width;
+	this.h = 500;
 	
 	this.display = function() 
 	{
 		rect(this.x, this.y, this.w, this.h);
+		print("alive");
 	}
 }
 
