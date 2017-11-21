@@ -181,5 +181,29 @@ function returnButton()
 	}
 }
 
+function ourTriange(x, y, w, h, pointLeft)
+{
+    //Find square area at center
+    if (w > h) {
+	var diff = w - h;
+	var x1 = Math.floor(x + diff/2);
+	var y1 = y;
+	var w1 = h;
+	var h1 = h;
+    } else {
+	var diff = h - w;
+	var x1 = x;
+	var y1 = Math.floor(y + diff/2);
+	var w1 = w;
+	var h1 = w;
+    }
 
+    //Make margin
+    var margin = Math.floor(Math.min(h,w)/10);
+    x1 = x1+margin;
+    y1 = y1+margin;
+    h1 = h1 - 2*margin;
+    w1 = w1 - 2*margin;
 
+    triangle(x1, y1, x1, y1+h1, x1+w1, y1+h1/2);
+}
