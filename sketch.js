@@ -23,7 +23,10 @@ function windowResized()
 }
 
 function draw() { 
-  background(220);
+	
+	background(220);
+	fill(255, 255, 255);
+	strokeWeight(1);
 	if (showMenu == true)  
 	{
 		startButton1.display();
@@ -55,6 +58,7 @@ function mousePressed()
 	if (soccerActivated == true) 
 	{
 		football1.collide();
+		returnKnap.collide();
 	}
 }
 function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amount) 
@@ -119,12 +123,15 @@ function football()
 	this.w = 300;
 	this.h = 300;
 	
-	this.display = function() //TESTTT
+	this.display = function()
 	{
+		strokeWeight(5);
 		textSize(40);
+		fill(200, 200, 200);
 		rect(this.player1x, this.playery, this.w, this.h); //player 1
 		textAlign(CENTER);
 		rect(this.player2x, this.playery, this.w, this.h); //player 2
+		fill(0, 0, 0);
 		text(this.score + " - " + this.score2, width/2, height/2);
 	}
 	this.collide = function() 
@@ -147,15 +154,30 @@ function football()
 }
 function returnButton() 
 {
-	this.x = 0;
-	this.y = 200;
-	this.w = width;
-	this.h = 500;
+	this.w = width/3;
+	this.h = 100;
+	this.x = 0+this.w;
+	this.y = height-100;
 	
 	this.display = function() 
 	{
+		noFill();
+		strokeWeight(0);
+		//fill(255, 0, 0);
 		rect(this.x, this.y, this.w, this.h);
+		strokeWeight(10);
+		ellipse(this.x+this.w/2, this.y+this.h/2, this.h);
 		print("alive");
+	}
+	
+	this.collide = function() 
+	{
+		var c = circleCollision(this.x, this.y, this.w, this.h, mouseX, mouseY, 1, 1);
+		if (c == true) 
+		{
+			showMenu = true;
+			soccerActivated = false;
+		}
 	}
 }
 
