@@ -1,11 +1,12 @@
 var showMenu = true;
 var soccerActivated = false;
 var fbIcon;
-var supriseIcon;
+var surpriseIcon;
 var surprise = false;
+var returnKnap;
 function preload() 
 {
-	supriseIcon = loadImage("6025473.png");
+	surpriseIcon = loadImage("6025473.png");
 	fbIcon = loadImage("soccer.png");
 }
 
@@ -37,7 +38,7 @@ function draw() {
 	if (i1 > 0) i1--;
 	if (surprise == true) 
 	{
-		image(supriseIcon, 200, 200);
+		image(surpriseIcon, 200, 200);
 	}
 }
 
