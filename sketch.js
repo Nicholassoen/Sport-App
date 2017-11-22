@@ -11,22 +11,29 @@ function preload()
 	fbIcon = loadImage("soccer.png");
 }
 
-var noSleep;
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+	createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
 	football1 = new football();
+	topBox1 = new topBox();
 	returnKnap = new returnButton();
 	foo = new p5.Speech();
 	foo.speak("Voice initialized");
-	noSleep = new NoSleep();
-	noSleep.enable();
-} 
+}
 
 function windowResized() 
 {
 	resizeCanvas(windowWidth, windowHeight);
 }
+
+var noSleep;
+function enableNoSleep() {
+	noSleep = new NoSleep();
+	noSleep.enable();
+	document.removeEventListener('click', enableNoSleep, false);
+}
+// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
+document.addEventListener('click', enableNoSleep, false);
 
 function draw() { 
     background(220);
@@ -42,6 +49,7 @@ function draw() {
 		football1.display();
 		football1.update();
 		returnKnap.display();
+		topBox1.display();
 	}
 	if (surprise == true) 
 	{
@@ -63,6 +71,7 @@ function mousePressed()
 	{
 		football1.collide();
 		returnKnap.collide();
+		topBox1.collide();
 	}
 }
 function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amount) 
@@ -93,7 +102,85 @@ function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amou
 	} else {
 		return false;
 	}
-	return closeX, closeY;
+}
+
+function cc(x, y, w, h) {
+	return circleCollision(x, y, w, h ,mouseX, mouseY, 1, 1);
+}
+
+var topHeight = 110;
+function topBox() {
+	this.leftName = "Player 1";
+	this.rightName = "Player 2";
+	this.editName = "none";
+	this.input = null;
+	this.collide = function() {
+		if (cc(0,0,2/5*width, topHeight)) {
+			//Player 1 name
+			if (this.editName === "none") {
+				this.input = createInput(this.leftName);
+				this.input.position(30, 40);
+				this.editName = "left";
+				var tthis = this;
+				setTimeout(function() {tthis.input.elt.focus();}, 1);
+			} else {
+				this.stopInput();
+			}
+		} else if (cc(3/5*width, 0, 2/5*width, topHeight)) {
+			//Player 2 name
+			if (this.editName === "none") {
+				this.input = createInput(this.leftName);
+				this.input.position(30, 40);
+				this.editName = "right";
+				var tthis = this;
+				setTimeout(function() {tthis.input.elt.focus();}, 1);
+			} else {
+				this.stopInput();
+			}
+		}
+	}
+	
+	this.display = function() {
+		strokeWeight(4);
+		line(0, topHeight, width, topHeight);
+		// 2/5 for each side
+		line(2/5*width, 0, 2/5*width, topHeight);
+		line(3/5*width, 0, 3/5*width, topHeight);
+	}
+
+	this.removeElement = function() {
+		this.input.remove();
+		this.input = null;
+		this.editName = "none";
+	}
+	
+	this.stopInput = function() {
+		switch (this.editName) {
+		case "none":
+			break;
+		case "left":
+			this.leftName = this.input.value;
+			this.removeElement();
+			break;
+		case "right":
+			this.rightName = this.input.value;
+			this.removeElement();
+			break;
+		}
+	}
+}
+
+var inp;
+function startInput() {
+	inp = createInput("input text");
+	inp.input(myInputEvent);
+	inp.position(30, 40);
+
+}
+
+
+function myInputEvent(){
+	console.log('you are typing: ', this.value());
 }
 
 
@@ -242,7 +329,6 @@ function returnButton()
 		strokeWeight(10);
 		fill(220);
 		ellipse(this.x+this.w/2, this.y, this.h/3);
-		print("alive");
 	}
 	
 	this.collide = function() 
