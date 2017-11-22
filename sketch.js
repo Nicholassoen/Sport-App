@@ -196,15 +196,16 @@ function returnButton()
 		noFill();
 		strokeWeight(0);
 		//fill(255, 0, 0);
-		rect(this.x, this.y, this.w, this.h);
+		rect(this.x, this.y-this.h/6, this.w, this.h/3);
 		strokeWeight(10);
+		fill(220);
 		ellipse(this.x+this.w/2, this.y, this.h/3);
 		print("alive");
 	}
 	
 	this.collide = function() 
 	{
-		var c = circleCollision(this.x, this.y, this.w, this.h, mouseX, mouseY, 1, 1);
+		var c = circleCollision(this.x, this.y-this.h/6, this.w, this.h/3, mouseX, mouseY, 1, 1);
 		if (c == true)
 		{
 			showMenu = true;
