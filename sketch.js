@@ -10,6 +10,7 @@ function preload()
 	fbIcon = loadImage("soccer.png");
 }
 
+var noSleep;
 function setup() {
     createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
@@ -17,6 +18,8 @@ function setup() {
 	returnKnap = new returnButton();
 	foo = new p5.Speech();
 	foo.speak("Voice initialized");
+	noSleep = new NoSleep();
+	noSleep.enable();
 } 
 
 function windowResized() 
