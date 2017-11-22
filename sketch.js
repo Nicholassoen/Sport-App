@@ -1,6 +1,7 @@
 var showMenu = true;
 var soccerActivated = false;
 var fbIcon;
+var badIcon;
 var surpriseIcon;
 var surprise = false;
 var returnKnap;
@@ -100,35 +101,49 @@ function startButton()
 {
 	this.w = 200;	
 	this.h = 200;
-	this.x = width/2-this.w/2;
-	this.y = height/2-this.h/2;
+	this.x = 50;
+	this.y = height/2;
 	
 	this.display = function() 
 	{
-		image(fbIcon,this.x, this.y, this.w, this.h);
-		text("Fodbold", this.x, this.y);
+		image(fbIcon,this.x, this.y/2, this.w, this.h);
 	}
 	
 	this.collide = function() 
 	{
 		var c = circleCollision(this.x, this.y, this.w, this.h, mouseX, mouseY, 1, 10);
-		print(c);
 	}
 }
 var i1 = 0;
 var i2 = 0;
-function football() 
+
+function saetManager(score)
+{
+	var bool = false;
+	if (score == 11)
+	{
+		bool = true;
+	}
+	return bool;
+}
+
+function football()
 {
 	this.score = 0;
+	this.score12 = 0;
+	this.score13 = 0;
+	
 	this.score2 = 0;
+	this.score22 = 0;
+	this.score23 = 0;
+	
 	this.player1x = 0;
-	this.playery = height/6
+	this.playery = height/6;
 	this.player2x = width/2;
 	this.w = width/2;
 	this.h = height/1.44;
 	this.col = color(255, 255, 255);
 	this.col2 = color(255, 255, 255);
-	
 	this.display = function()
 	{
 		noStroke();
@@ -141,9 +156,19 @@ function football()
 		stroke("black");
 		strokeWeight(3);
 		fill(0, 0, 0);
-		text(this.score + " - " + this.score2, width/2, height/2);
 		line(0, this.h+this.playery, width, this.playery+this.h); 
 		line(width/2, 0, width/2, height);
+		
+		//Sætene
+		textAlign(CENTER);
+		text(this.score, this.player1x+this.w/2, this.playery*2);
+		text(this.score12, this.player1x+this.w/2, this.playery*3);
+		text(this.score13, this.player1x+this.w/2, this.playery*4);
+		
+		
+		text(this.score2, this.player2x+this.w/2, this.playery*2);
+		text(this.score22, this.player2x+this.w/2, this.playery*3);
+		text(this.score23, this.player2x+this.w/2, this.playery*4);
 	}
 	
 	this.collide = function()
@@ -152,21 +177,38 @@ function football()
 												 mouseX, mouseY, 1, 1);
 		if (c == true && i1 == 0 && i2 == 0)
 		{
-			this.score++;
+			if (this.score != 11 && this.score2 != 11) {
+				this.score++;
+			} else if(this.score12 != 11 && this.score22 != 11) 
+			{
+				this.score12++;
+			} else if(this.score13 != 11 && this.score23 != 11) 
+			{
+				this.score13++;
+			}
 			i1 = 20;
 			i2 = 20;
 			this.col = color(255, 0, 0);
-			foo.speak("team 1 scores with " + this.score + " and team 2 score is " + this.score2);
+			foo.speak("team 1 scores with " + this.score  + " and team 2 score is " + this.score2 );
 		}
 		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
 		if (c2 == true && i2 == 0 && i1 == 0) 
 		{
-			this.score2++;
+			if (this.score2 != 11 && this.score != 11) {
+				this.score2++;
+			} else if(this.score22 != 11 && this.score12 != 11) 
+			{
+				this.score22++;;
+			} else if(this.score23 != 11 && this.score13 != 11) 
+			{
+				this.score23++;
+			}
+			
 			i2 = 20;
 			i1 = 20;
 			this.col2 = color(255, 0, 0);
-			foo.speak("team 2 scores with " + this.score2 + " and team 1 score is " + this.score);
+			foo.speak("team 2 scores with " + this.score2  + " and team 1 score is " + this.score );
 		}
 	}
 	
