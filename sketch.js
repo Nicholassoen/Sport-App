@@ -15,6 +15,8 @@ function setup() {
 	startButton1 = new startButton();
 	football1 = new football();
 	returnKnap = new returnButton();
+	foo = new P5.Speech();
+	foo.speak("hi there");
 } 
 
 function windowResized() 
