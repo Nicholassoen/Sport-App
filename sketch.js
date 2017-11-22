@@ -142,7 +142,7 @@ function football()
 	{
 		var c = circleCollision(this.player1x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
-		if (c == true && i1 == 0 && i2 == 0) 
+		if (c == true && i1 == 0 && i2 == 0)
 		{
 			this.score++;
 			i1 = 20;
@@ -177,9 +177,9 @@ function football()
 function returnButton() 
 {
 	this.w = width/3;
-	this.h = 20;
+	this.h = height/2-150/2;
 	this.x = 0+this.w;
-	this.y = height-100;
+	this.y = height-75;
 	
 	this.display = function() 
 	{
@@ -188,14 +188,14 @@ function returnButton()
 		//fill(255, 0, 0);
 		rect(this.x, this.y, this.w, this.h);
 		strokeWeight(10);
-		ellipse(this.x+this.w/2, this.y+this.h/2, this.h);
+		ellipse(this.x+this.w/2, this.y+40, this.h/3);
 		print("alive");
 	}
 	
 	this.collide = function() 
 	{
 		var c = circleCollision(this.x, this.y, this.w, this.h, mouseX, mouseY, 1, 1);
-		if (c == true) 
+		if (c == true)
 		{
 			showMenu = true;
 			soccerActivated = false;
