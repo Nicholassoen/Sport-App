@@ -11,12 +11,12 @@ function preload()
 }
 
 function setup() {
-        createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
 	football1 = new football();
 	returnKnap = new returnButton();
-	foo = new P5.Speech();
-	foo.speak("hi there");
+	foo = new p5.Speech();
+	foo.speak("hi the");
 } 
 
 function windowResized() 
@@ -25,7 +25,7 @@ function windowResized()
 }
 
 function draw() { 
-        background(220);
+     background(220);
 	fill(255, 255, 255);
 	strokeWeight(1);
 	if (showMenu == true)  
