@@ -11,7 +11,7 @@ function preload()
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+        createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
 	football1 = new football();
 	returnKnap = new returnButton();
@@ -23,8 +23,7 @@ function windowResized()
 }
 
 function draw() { 
-	
-	background(220);
+        background(220);
 	fill(255, 255, 255);
 	strokeWeight(1);
 	if (showMenu == true)  
@@ -226,6 +225,10 @@ function ourTriange(x, y, w, h, pointLeft)
     y1 = y1+margin;
     h1 = h1 - 2*margin;
     w1 = w1 - 2*margin;
-
-    triangle(x1, y1, x1, y1+h1, x1+w1, y1+h1/2);
+    
+    if (pointLeft) {
+	triangle(x1, y1+h1/2, x1+w1, y1, x1+w1, y1+h1);
+    } else {
+	triangle(x1, y1, x1, y1+h1, x1+w1, y1+h1/2);
+    }
 }
