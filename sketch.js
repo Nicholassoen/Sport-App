@@ -93,7 +93,7 @@ function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amou
 
 function startButton() 
 {
-	this.w = 200;
+	this.w = 200;	
 	this.h = 200;
 	this.x = width/2-this.w/2;
 	this.y = height/2-this.h/2;
