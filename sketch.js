@@ -8,7 +8,8 @@ var returnKnap;
 function preload() 
 {
 	surpriseIcon = loadImage("kartofler.png");
-	fbIcon = loadImage("soccer.png");
+	fbIcon = loadImage("badminton.svg");
+	//fbIcon = loadImage("soccer.png");
 }
 
 function setup() {
