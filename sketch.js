@@ -16,7 +16,7 @@ function setup() {
 	football1 = new football();
 	returnKnap = new returnButton();
 	foo = new p5.Speech();
-	foo.speak("hi there, i love potatoes with brown sauce");
+	foo.speak("Voice initialized");
 } 
 
 function windowResized() 
@@ -118,25 +118,29 @@ function football()
 {
 	this.score = 0;
 	this.score2 = 0;
-	this.player1x = 20;
-	this.playery = height/2-150/2;
-	this.player2x = width-320;
-	this.w = 300;
-	this.h = 300;
+	this.player1x = 0;
+	this.playery = height/6
+	this.player2x = width/2;
+	this.w = width/2;
+	this.h = height/1.44;
 	this.col = color(255, 255, 255);
 	this.col2 = color(255, 255, 255);
 	
 	this.display = function()
 	{
-		strokeWeight(5);
+		noStroke();
 		textSize(40);
 		fill(this.col);
 		rect(this.player1x, this.playery, this.w, this.h); //player 1
 		textAlign(CENTER); 
 		fill(this.col2);
 		rect(this.player2x, this.playery, this.w, this.h); //player 2
+		stroke("black");
+		strokeWeight(3);
 		fill(0, 0, 0);
 		text(this.score + " - " + this.score2, width/2, height/2);
+		line(0, this.h+this.playery, width, this.playery+this.h); 
+		line(width/2, 0, width/2, height);
 	}
 	
 	this.collide = function()
@@ -149,6 +153,7 @@ function football()
 			i1 = 20;
 			i2 = 20;
 			this.col = color(255, 0, 0);
+			foo.speak("team 1 scores with " + this.score + " and team 2 score is " + this.score2);
 		}
 		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
@@ -158,6 +163,7 @@ function football()
 			i2 = 20;
 			i1 = 20;
 			this.col2 = color(255, 0, 0);
+			foo.speak("team 2 scores with " + this.score2 + " and team 1 score is " + this.score);
 		}
 	}
 	
@@ -180,7 +186,7 @@ function returnButton()
 	this.w = width/3;
 	this.h = height/2-150/2;
 	this.x = 0+this.w;
-	this.y = height-75;
+	this.y = height-40;
 	
 	this.display = function() 
 	{
@@ -189,7 +195,7 @@ function returnButton()
 		//fill(255, 0, 0);
 		rect(this.x, this.y, this.w, this.h);
 		strokeWeight(10);
-		ellipse(this.x+this.w/2, this.y+40, this.h/3);
+		ellipse(this.x+this.w/2, this.y, this.h/3);
 		print("alive");
 	}
 	
