@@ -10,6 +10,7 @@ function preload()
 	fbIcon = loadImage("soccer.png");
 }
 
+var noSleep;
 function setup() {
     createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
@@ -17,6 +18,8 @@ function setup() {
 	returnKnap = new returnButton();
 	foo = new p5.Speech();
 	foo.speak("hi there, i love potatoes with brown sauce");
+	noSleep = new NoSleep();
+	noSleep.enable();
 } 
 
 function windowResized() 
