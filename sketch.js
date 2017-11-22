@@ -16,7 +16,7 @@ function setup() {
 	football1 = new football();
 	returnKnap = new returnButton();
 	foo = new p5.Speech();
-	foo.speak("hi the");
+	foo.speak("hi there, i love potatoes with brown sauce");
 } 
 
 function windowResized() 
@@ -25,7 +25,7 @@ function windowResized()
 }
 
 function draw() { 
-     background(220);
+    background(220);
 	fill(255, 255, 255);
 	strokeWeight(1);
 	if (showMenu == true)  
