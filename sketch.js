@@ -35,10 +35,9 @@ function draw() {
 	if (soccerActivated == true) 
 	{
 		football1.display();
+		football1.update();
 		returnKnap.display();
 	}
-	
-	if (i1 > 0) i1--;
 	if (surprise == true) 
 	{
 		image(surpriseIcon, 200, 200);
@@ -113,6 +112,7 @@ function startButton()
 	}
 }
 var i1 = 0;
+var i2 = 0;
 function football() 
 {
 	this.score = 0;
@@ -122,40 +122,62 @@ function football()
 	this.player2x = width-320;
 	this.w = 300;
 	this.h = 300;
+	this.col = color(255, 255, 255);
+	this.col2 = color(255, 255, 255);
 	
 	this.display = function()
 	{
 		strokeWeight(5);
 		textSize(40);
-		fill(200, 200, 200);
+		fill(this.col);
 		rect(this.player1x, this.playery, this.w, this.h); //player 1
-		textAlign(CENTER);
+		textAlign(CENTER); 
+		fill(this.col2);
 		rect(this.player2x, this.playery, this.w, this.h); //player 2
 		fill(0, 0, 0);
 		text(this.score + " - " + this.score2, width/2, height/2);
 	}
-	this.collide = function() 
+	
+	this.collide = function()
 	{
 		var c = circleCollision(this.player1x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
-		if (c == true && i1 == 0) 
+		if (c == true && i1 == 0 && i2 == 0) 
 		{
 			this.score++;
 			i1 = 20;
+			i2 = 20;
+			this.col = color(255, 0, 0);
 		}
 		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
-		if (c2 == true && i1 == 0) 
+		if (c2 == true && i2 == 0 && i1 == 0) 
 		{
 			this.score2++;
-			i1 = 10;
+			i2 = 20;
+			i1 = 20;
+			this.col2 = color(255, 0, 0);
 		}
+	}
+	
+	this.update = function() 
+	{
+		if (i1 == 0) 
+		{
+			this.col = color(255, 255, 255);
+		}
+		if (i2 == 0) 
+		{
+			this.col2 = color(255, 255, 255);
+		}
+		if (i1 > 0) i1--;
+		if (i2 > 0) i2--;
 	}
 }
 function returnButton() 
 {
 	this.w = width/3;
-	this.h = 100;
+	this.h = 20;
 	this.x = 0+this.w;
 	this.y = height-100;
 	
