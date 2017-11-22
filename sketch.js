@@ -10,22 +10,28 @@ function preload()
 	fbIcon = loadImage("soccer.png");
 }
 
-var noSleep;
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+	createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
 	football1 = new football();
 	returnKnap = new returnButton();
 	foo = new p5.Speech();
 	foo.speak("Voice initialized");
-	noSleep = new NoSleep();
-	noSleep.enable();
-} 
+}
 
 function windowResized() 
 {
 	resizeCanvas(windowWidth, windowHeight);
 }
+
+var noSleep;
+function enableNoSleep() {
+	noSleep = new NoSleep();
+	noSleep.enable();
+	document.removeEventListener('click', enableNoSleep, false);
+}
+// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
+document.addEventListener('click', enableNoSleep, false);
 
 function draw() { 
     background(220);
@@ -41,6 +47,7 @@ function draw() {
 		football1.display();
 		football1.update();
 		returnKnap.display();
+		drawTop();
 	}
 	if (surprise == true) 
 	{
@@ -93,6 +100,30 @@ function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amou
 		return false;
 	}
 	return closeX, closeY;
+}
+
+
+var topHeight = 70;
+initialized = false;
+function drawTop() {
+	strokeWeight(4);
+	line(0, topHeight, width, topHeight);
+	// 2/5 for each side
+	line(2/5*width, 0, 2/5*width, topHeight);
+	line(3/5*width, 0, 3/5*width, topHeight);
+}
+
+var inp;
+function startInput() {
+	inp = createInput("input text");
+	inp.input(myInputEvent);
+	inp.position(30, 40);
+
+}
+
+
+function myInputEvent(){
+	console.log('you are typing: ', this.value());
 }
 
 
@@ -200,7 +231,6 @@ function returnButton()
 		strokeWeight(10);
 		fill(220);
 		ellipse(this.x+this.w/2, this.y, this.h/3);
-		print("alive");
 	}
 	
 	this.collide = function() 
