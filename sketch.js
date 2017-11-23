@@ -88,6 +88,8 @@ function mousePressed()
 		bottomBox1.collide();
 		topBox1.collide();
 	}
+
+	return false
 }
 function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amount)
 {
