@@ -98,7 +98,8 @@ function mousePressed()
 		topBox1.collide();
 		Football.clickedTimer();
 	}
-	
+
+	return false
 }
 function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amount)
 {
@@ -390,7 +391,23 @@ function Badminton()
 												 mouseX, mouseY, 1, 1);
 		if (c2 == true && i2 == 0 && i1 == 0)
 		{
-			
+			if (this.score2 != 11 && this.score != 11) {
+				this.score2++;
+				this.player2Score++;
+				foo.speak(this.score2 + "  " + this.score + " to player 2");
+			} else if(this.score22 != 11 && this.score12 != 11)
+			{
+				if (this.score2 == 11) foo.speak("Sæt færdig gjort");
+				this.score22++;
+				this.player2Score++;
+				foo.speak(this.score22 + "  " + this.score12 + " to player 2");
+			} else if(this.score23 != 11 && this.score13 != 11) 
+			{
+				if (this.score22 == 11) foo.speak("Sæt færdig gjort");
+				this.score23++;
+				this.player2Score++;
+				foo.speak(this.score23 + "  " + this.score13 + " to player 2");
+			}		
 			i2 = 20;
 			i1 = 20;
 			this.col2 = color(255, 0, 0);
