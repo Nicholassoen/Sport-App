@@ -146,7 +146,7 @@ function topBox() {
 		} else if (cc(3/5*width, 0, 2/5*width, topHeight)) {
 			//Player 2 name
 			if (this.editName === "none") {
-				this.input = createInput(this.leftName);
+				this.input = createInput(this.rightName);
 				this.editName = "right";
 				this.placeInput();
 				var tthis = this;
@@ -195,7 +195,8 @@ function topBox() {
 		var rightm = this.rightBox.addMargin(10);
 
 		noFill();
-		strokeWeight(2);
+		strokeWeight(3);
+		textSize(leftm.h*9/10);
 		if (this.editName !== "left") {
 			text(this.leftName, leftm.x, leftm.y, leftm.w, leftm.h);
 		}
