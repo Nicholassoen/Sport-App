@@ -12,6 +12,7 @@ function preload()
 	//fbIcon = loadImage("soccer.png");
 }
 
+var foo;
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
@@ -115,13 +116,16 @@ function topBox() {
 	this.rightName = "Player 2";
 	this.editName = "none";
 	this.input = null;
+	this.leftBox = null;
+	this.middleBox = null;
+	this.rightBox = null;
 	this.collide = function() {
 		if (cc(0,0,2/5*width, topHeight)) {
 			//Player 1 name
 			if (this.editName === "none") {
 				this.input = createInput(this.leftName);
-				this.input.position(30, 40);
 				this.editName = "left";
+				this.placeInput();
 				var tthis = this;
 				setTimeout(function() {tthis.input.elt.focus();}, 1);
 			} else {
@@ -131,22 +135,69 @@ function topBox() {
 			//Player 2 name
 			if (this.editName === "none") {
 				this.input = createInput(this.leftName);
-				this.input.position(30, 40);
 				this.editName = "right";
+				this.placeInput();
 				var tthis = this;
 				setTimeout(function() {tthis.input.elt.focus();}, 1);
 			} else {
 				this.stopInput();
 			}
+		} else if (this.input) {
+			this.stopInput();
+		}
+	}
+
+	//Must be called after this.display
+	this.placeInput = function() {
+		if (!this.input) {
+			return;
+		}
+
+		if (this.editName === "left") {
+			var box = this.leftBox;
+		} else {
+			var box = this.rightBox;
+		}
+
+		var mbox = box.addMargin(10);
+		this.input.size(mbox.w, mbox.h);
+		this.input.position(mbox.x, mbox.y);
+		this.input.elt.style.fontSize = (mbox.h*(2/3))+"px";
+		if (!this.input.elt.onkeypress) {
+			var that = this;
+			this.input.elt.onkeypress = function(e) {
+				if (e.keyCode == 13) {
+					that.stopInput();
+				}
+			}
 		}
 	}
 	
 	this.display = function() {
+		this.leftBox = new boks(0, 0, 2/5*width, topHeight);
+		this.middleBox = new boks(2/5*width, 0, 1/5*width, topHeight);
+		this.rightBox = new boks(3/5*width, 0, 2/5*width, topHeight);
+
+		var leftm = this.leftBox.addMargin(10);
+
+		var rightm = this.rightBox.addMargin(10);
+
+		noFill();
+		strokeWeight(2);
+		if (this.editName !== "left") {
+			text(this.leftName, leftm.x, leftm.y, leftm.w, leftm.h);
+		}
+		if (this.editName !== "right") {
+			text(this.rightName, rightm.x, rightm.y, rightm.w, rightm.h);
+		}
+		
 		strokeWeight(4);
 		line(0, topHeight, width, topHeight);
 		// 2/5 for each side
 		line(2/5*width, 0, 2/5*width, topHeight);
 		line(3/5*width, 0, 3/5*width, topHeight);
+
+		this.placeInput();
 	}
 
 	this.removeElement = function() {
@@ -160,11 +211,11 @@ function topBox() {
 		case "none":
 			break;
 		case "left":
-			this.leftName = this.input.value;
+			this.leftName = this.input.value();
 			this.removeElement();
 			break;
 		case "right":
-			this.rightName = this.input.value;
+			this.rightName = this.input.value();
 			this.removeElement();
 			break;
 		}
@@ -360,16 +411,33 @@ function ourTriange(x, y, w, h, pointLeft)
 	var h1 = w;
     }
 
-    //Make margin
-    var margin = Math.floor(Math.min(h,w)/10);
-    x1 = x1+margin;
-    y1 = y1+margin;
-    h1 = h1 - 2*margin;
-    w1 = w1 - 2*margin;
-    
     if (pointLeft) {
 	triangle(x1, y1+h1/2, x1+w1, y1, x1+w1, y1+h1);
     } else {
 	triangle(x1, y1, x1, y1+h1, x1+w1, y1+h1/2);
     }
+}
+
+function boks(x, y, w ,h) {
+	this.x = x;
+	this.y = y;
+	this.w = w;
+	this.h = h;
+        var that = this
+  
+	this.addMargin = function(margin) {
+		//Make margin
+		x1 = this.x + margin;
+		y1 = this.y + margin;
+		w1 = this.w - 2*margin;
+		h1 = this.h - 2*margin;
+		return new boks(x1, y1, w1, h1);
+	};
+
+	this.callWith = function(f) {
+		var args = [this.x, this.y, this.w, this.h];
+		args = args.concat([].slice.call(arguments, 1));
+		console.log([].slice.call(arguments, 1));
+		return f.call(this, args);
+	};
 }
