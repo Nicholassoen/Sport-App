@@ -1,21 +1,23 @@
 var showMenu = true;
+var badmintonActivated = false;
 var soccerActivated = false;
-var fbIcon;
+var badmintonIcon;
 var badIcon;
 var surpriseIcon;
 var surprise = false;
 var returnKnap;
-function preload() 
+function preload()
 {
 	surpriseIcon = loadImage("kartofler.png");
-	fbIcon = loadImage("badminton.svg");
-	//fbIcon = loadImage("soccer.png");
+	badmintonIcon = loadImage("badminton.svg");
+	soccerIcon = loadImage("soccer.png");
 }
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	startButton1 = new startButton();
-	football1 = new football();
+	badminton = new Badminton();
+	Football = new football();
 	topBox1 = new topBox();
 	returnKnap = new returnButton();
 	foo = new p5.Speech();
@@ -45,12 +47,18 @@ function draw() {
 		startButton1.display();
 	}
 	
-	if (soccerActivated == true) 
+	if (badmintonActivated == true) 
 	{
-		football1.display();
-		football1.update();
+		badminton.display();
+		badminton.update();
+		badminton.saet();
 		returnKnap.display();
 		topBox1.display();
+	}
+	if (soccerActivated == true) 
+	{
+		Football.display();
+		Football.update();
 	}
 	if (surprise == true) 
 	{
@@ -64,18 +72,22 @@ function mousePressed()
 	if (showMenu == true) 
 	{
 		startButton1.collide();
-		showMenu = false;
-		soccerActivated = true;
 	}
 	
-	if (soccerActivated == true) 
+	if (badmintonActivated == true) 
 	{
-		football1.collide();
+		badminton.collide();
+		returnKnap.collide();
+		topBox1.collide();
+	}
+	if (soccerActivated) 
+	{
+		Football.collide();
 		returnKnap.collide();
 		topBox1.collide();
 	}
 }
-function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amount) 
+function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amount)
 {
 	var closeX = circleX;
 	var closeY = circleY;
@@ -192,30 +204,33 @@ function startButton()
 	this.x = 50;
 	this.y = height/2;
 	
+	this.sx = 250;
+	
 	this.display = function() 
 	{
-		image(fbIcon,this.x, this.y/2, this.w, this.h);
+		image(badmintonIcon,this.x, this.y/2, this.w, this.h);
+		image(soccerIcon, this.x*6, this.y/2, this.w, this.h);
 	}
 	
 	this.collide = function() 
 	{
-		var c = circleCollision(this.x, this.y, this.w, this.h, mouseX, mouseY, 1, 10);
+		var c = circleCollision(this.x, this.y/2, this.w, this.h, mouseX, mouseY, 1, 10);
+		if (c == true) 
+		{
+			showMenu = false;
+			badmintonActivated = true;
+		}
+		var cs = cc(this.x*6, this.y/2, this.w, this.h);
+		if (cs == true) 
+		{
+			showMenu = false;
+			soccerActivated = true;
+		}
 	}
 }
 var i1 = 0;
 var i2 = 0;
-
-function saetManager(score)
-{
-	var bool = false;
-	if (score == 11)
-	{
-		bool = true;
-	}
-	return bool;
-}
-
-function football()
+function Badminton()
 {
 	this.score = 0;
 	this.score12 = 0;
@@ -225,8 +240,11 @@ function football()
 	this.score22 = 0;
 	this.score23 = 0;
 	
+	this.player1Score = 0;
+	this.player2Score = 0;
+	
 	this.player1x = 0;
-	this.playery = height/6;
+	this.playery = topHeight;
 	this.player2x = width/2;
 	this.w = width/2;
 	this.h = height/1.44;
@@ -245,10 +263,14 @@ function football()
 		strokeWeight(3);
 		fill(0, 0, 0);
 		line(0, this.h+this.playery, width, this.playery+this.h); 
-		line(width/2, 0, width/2, height);
+		line(width/2, topHeight, width/2, height);
 		
 		//Sætene
 		textAlign(CENTER);
+	}
+	
+	this.saet = function() 
+	{
 		text(this.score, this.player1x+this.w/2, this.playery*2);
 		text(this.score12, this.player1x+this.w/2, this.playery*3);
 		text(this.score13, this.player1x+this.w/2, this.playery*4);
@@ -257,6 +279,19 @@ function football()
 		text(this.score2, this.player2x+this.w/2, this.playery*2);
 		text(this.score22, this.player2x+this.w/2, this.playery*3);
 		text(this.score23, this.player2x+this.w/2, this.playery*4);
+		
+		if (this.player1Score == 22 && this.player2Score != 22|| this.player1Score == 33) 
+		{
+			foo.speak("Player 1 won the match");
+			textSize(80);
+			text("Player 1 has won the match", width/2, height/21);
+		}
+		
+		if (this.player2Score == 22 && this.player1Score < 11|| this.player2Score == 33) 
+		{
+			textSize(80);
+			text("Player 2 has won the match", width/2, height/2);
+		}
 	}
 	
 	this.collide = function()
@@ -267,36 +302,31 @@ function football()
 		{
 			if (this.score != 11 && this.score2 != 11) {
 				this.score++;
-			} else if(this.score12 != 11 && this.score22 != 11) 
+				this.player1Score++;
+				foo.speak(this.score + "  " + this.score2 + " to player 1");
+			} else if(this.score12 != 11 && this.score22 != 11)
 			{
 				this.score12++;
+				this.player1Score++;
+				foo.speak(this.score12 + "  " + this.score22 + " to player 1");
 			} else if(this.score13 != 11 && this.score23 != 11) 
 			{
 				this.score13++;
+				this.player1Score++;
+				foo.speak(this.score13 + "  " + this.score23 + " to player 1");
 			}
 			i1 = 20;
 			i2 = 20;
 			this.col = color(255, 0, 0);
-			foo.speak("team 1 scores with " + this.score  + " and team 2 score is " + this.score2 );
 		}
 		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
-		if (c2 == true && i2 == 0 && i1 == 0) 
+		if (c2 == true && i2 == 0 && i1 == 0)
 		{
-			if (this.score2 != 11 && this.score != 11) {
-				this.score2++;
-			} else if(this.score22 != 11 && this.score12 != 11) 
-			{
-				this.score22++;;
-			} else if(this.score23 != 11 && this.score13 != 11) 
-			{
-				this.score23++;
-			}
 			
 			i2 = 20;
 			i1 = 20;
 			this.col2 = color(255, 0, 0);
-			foo.speak("team 2 scores with " + this.score2  + " and team 1 score is " + this.score );
 		}
 	}
 	
@@ -319,7 +349,7 @@ function returnButton()
 	this.w = width/3;
 	this.h = height/2-150/2;
 	this.x = 0+this.w;
-	this.y = height-40;
+	this.y = height-35;
 	
 	this.display = function() 
 	{
@@ -338,7 +368,7 @@ function returnButton()
 		if (c == true)
 		{
 			showMenu = true;
-			soccerActivated = false;
+			badmintonActivated = false;
 		}
 	}
 }
