@@ -5,7 +5,7 @@ var badmintonIcon;
 var badIcon;
 var surpriseIcon;
 var surprise = false;
-var returnKnap;
+var bottomBox1;
 function preload()
 {
 	surpriseIcon = loadImage("kartofler.png");
@@ -20,7 +20,7 @@ function setup() {
 	badminton = new Badminton();
 	Football = new football();
 	topBox1 = new topBox();
-	returnKnap = new returnButton();
+	bottomBox1 = new bottomBox();
 	foo = new p5.Speech();
 	foo.speak("Voice initialized");
 }
@@ -28,6 +28,7 @@ function setup() {
 function windowResized() 
 {
 	resizeCanvas(windowWidth, windowHeight);
+	bottomBox1.resized();
 }
 
 var noSleep;
@@ -40,20 +41,20 @@ function enableNoSleep() {
 document.addEventListener('click', enableNoSleep, false);
 
 function draw() { 
-    background(220);
+	background(220);
 	fill(255, 255, 255);
 	strokeWeight(1);
 	if (showMenu == true)  
 	{
 		startButton1.display();
 	}
-	
+
 	if (badmintonActivated == true) 
 	{
 		badminton.display();
 		badminton.update();
 		badminton.saet();
-		returnKnap.display();
+		bottomBox1.display();
 		topBox1.display();
 	}
 	if (soccerActivated == true) 
@@ -78,13 +79,13 @@ function mousePressed()
 	if (badmintonActivated == true) 
 	{
 		badminton.collide();
-		returnKnap.collide();
+		bottomBox1.collide();
 		topBox1.collide();
 	}
 	if (soccerActivated) 
 	{
 		Football.collide();
-		returnKnap.collide();
+		bottomBox1.collide();
 		topBox1.collide();
 	}
 }
@@ -109,7 +110,7 @@ function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amou
 		closeY = boxy+boxh;
 	}
 	var d = dist(closeX, closeY, mouseX, mouseY);
-	ellipse(closeX, closeY, 30, 30);
+	//ellipse(closeX, closeY, 30, 30);
 	if (d <= amount)
 	{
 		return true;
@@ -119,7 +120,7 @@ function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amou
 }
 
 function cc(x, y, w, h) {
-	return circleCollision(x, y, w, h ,mouseX, mouseY, 1, 1);
+	return circleCollision(x, y, w, h, mouseX, mouseY, 1, 1);
 }
 
 var topHeight = 110;
@@ -299,7 +300,7 @@ function Badminton()
 	this.playery = topHeight;
 	this.player2x = width/2;
 	this.w = width/2;
-	this.h = height/1.44;
+	this.h = height-topHeight-bottomHeight;
 	this.col = color(255, 255, 255);
 	this.col2 = color(255, 255, 255);
 	this.display = function()
@@ -314,8 +315,9 @@ function Badminton()
 		stroke("black");
 		strokeWeight(3);
 		fill(0, 0, 0);
-		line(0, this.h+this.playery, width, this.playery+this.h); 
-		line(width/2, topHeight, width/2, height);
+
+		//vertical divider line
+		line(width/2, topHeight, width/2, height-bottomHeight);
 		
 		//Sætene
 		textAlign(CENTER);
@@ -396,57 +398,76 @@ function Badminton()
 		if (i2 > 0) i2--;
 	}
 }
-function returnButton() 
-{
-	this.w = width/3;
-	this.h = height/2-150/2;
-	this.x = 0+this.w;
-	this.y = height-35;
+
+var bottomHeight = 150;
+function bottomBox() {
+	this.makeBoxes = function() {
+		this.boxLeft = new boks(0, height-bottomHeight, width/3, bottomHeight);
+		this.boxCenter = new boks(width/3, height-bottomHeight, width/3, bottomHeight);
+		this.boxRight = new boks(2*width/3, height-bottomHeight, width/3, bottomHeight);
+
+		var margin = min(width, bottomHeight)/10;
+		this.boxLeftM = this.boxLeft.addMargin(margin);
+		this.boxCenterM = this.boxCenter.addMargin(margin);
+		this.boxRightM = this.boxRight.addMargin(margin);
+	}
+	this.makeBoxes();
+
+	this.resized = function() {
+		this.makeBoxes();
+	}
 	
 	this.display = function() 
 	{
-		noFill();
-		strokeWeight(0);
-		//fill(255, 0, 0);
-		rect(this.x, this.y-this.h/6, this.w, this.h/3);
+		//line on top of bottom box
+		line(0, height-bottomHeight, width,  height-bottomHeight);
+
+		//Return bottom
 		strokeWeight(10);
 		fill(220);
-		ellipse(this.x+this.w/2, this.y, this.h/3);
+		ellipse(this.boxCenterM.x+this.boxCenterM.w/2,
+			this.boxCenterM.y+this.boxCenterM.h/2,
+			min(this.boxCenterM.w, this.boxCenterM.h)
+		       );
+
+		//Undo button
+		ourTriangle(this.boxLeftM, true);
+
+		//Redo button
+		ourTriangle(this.boxRightM, false);
 	}
 	
 	this.collide = function() 
 	{
-		var c = circleCollision(this.x, this.y-this.h/6, this.w, this.h/3, mouseX, mouseY, 1, 1);
-		if (c == true)
-		{
+		if (this.boxCenter.cc()) {
 			showMenu = true;
 			badmintonActivated = false;
 		}
 	}
 }
 
-function ourTriange(x, y, w, h, pointLeft)
+function ourTriangle(box, pointLeft)
 {
-    //Find square area at center
-    if (w > h) {
-	var diff = w - h;
-	var x1 = Math.floor(x + diff/2);
-	var y1 = y;
-	var w1 = h;
-	var h1 = h;
-    } else {
-	var diff = h - w;
-	var x1 = x;
-	var y1 = Math.floor(y + diff/2);
-	var w1 = w;
-	var h1 = w;
-    }
+	//Find square area at center
+	if (box.w > box.h) {
+		var diff = box.w - box.h;
+		var x1 = Math.floor(box.x + diff/2);
+		var y1 = box.y;
+		var w1 = box.h;
+		var h1 = box.h;
+	} else {
+		var diff = box.h - box.w;
+		var x1 = box.x;
+		var y1 = Math.floor(box.y + diff/2);
+		var w1 = box.w;
+		var h1 = box.w;
+	}
 
-    if (pointLeft) {
-	triangle(x1, y1+h1/2, x1+w1, y1, x1+w1, y1+h1);
-    } else {
-	triangle(x1, y1, x1, y1+h1, x1+w1, y1+h1/2);
-    }
+	if (pointLeft) {
+		triangle(x1, y1+h1/2, x1+w1, y1, x1+w1, y1+h1);
+	} else {
+		triangle(x1, y1, x1, y1+h1, x1+w1, y1+h1/2);
+	}
 }
 
 function boks(x, y, w ,h) {
@@ -465,10 +486,7 @@ function boks(x, y, w ,h) {
 		return new boks(x1, y1, w1, h1);
 	};
 
-	this.callWith = function(f) {
-		var args = [this.x, this.y, this.w, this.h];
-		args = args.concat([].slice.call(arguments, 1));
-		console.log([].slice.call(arguments, 1));
-		return f.call(this, args);
-	};
+	this.cc = function() {
+		return circleCollision(this.x, this.y, this.w, this.h, mouseX, mouseY, 1, 1);
+	}
 }
