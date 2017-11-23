@@ -6,6 +6,7 @@ var badIcon;
 var surpriseIcon;
 var surprise = false;
 var returnKnap;
+var timerStarted = true;
 function preload()
 {
 	surpriseIcon = loadImage("kartofler.png");
@@ -22,6 +23,7 @@ function setup() {
 	returnKnap = new returnButton();
 	foo = new p5.Speech();
 	foo.speak("Voice initialized");
+	
 }
 
 function windowResized() 
@@ -59,17 +61,21 @@ function draw() {
 	{
 		Football.display();
 		Football.update();
+		returnKnap.display();
+		topBox1.display();
+		Football.timer();
+		Football.showMenu();
 	}
 	if (surprise == true) 
 	{
 		image(surpriseIcon, 200, 200);
 	}
 }
-
-function mousePressed() 
+var mouseDelay = 0;
+function mousePressed()
 {
-	
-	if (showMenu == true) 
+	if (mouseDelay < 2) mouseDelay++;
+	if (showMenu == true)
 	{
 		startButton1.collide();
 	}
@@ -82,10 +88,14 @@ function mousePressed()
 	}
 	if (soccerActivated) 
 	{
-		Football.collide();
+		if (mouseDelay == 2) {
+			Football.collide();
+		}
 		returnKnap.collide();
 		topBox1.collide();
+		Football.clickedTimer();
 	}
+	
 }
 function circleCollision(boxx, boxy, boxw, boxh, circleX, circleY, circleR, amount)
 {
@@ -306,11 +316,13 @@ function Badminton()
 				foo.speak(this.score + "  " + this.score2 + " to player 1");
 			} else if(this.score12 != 11 && this.score22 != 11)
 			{
+				if (this.score == 11) foo.speak("Sæt færdig gjort");
 				this.score12++;
 				this.player1Score++;
 				foo.speak(this.score12 + "  " + this.score22 + " to player 1");
 			} else if(this.score13 != 11 && this.score23 != 11) 
 			{
+				if (this.score12 == 11) foo.speak("Sæt færdig gjort");
 				this.score13++;
 				this.player1Score++;
 				foo.speak(this.score13 + "  " + this.score23 + " to player 1");
@@ -369,6 +381,7 @@ function returnButton()
 		{
 			showMenu = true;
 			badmintonActivated = false;
+			soccerActivated = false;
 		}
 	}
 }

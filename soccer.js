@@ -12,6 +12,8 @@ function football()
 	this.h = height/1.44;
 	this.col = color(255, 255, 255);
 	this.col2 = color(255, 255, 255);
+	this.col3 = color(255, 255, 255);
+	this.startTime = 0;
 	this.display = function()
 	{
 		noStroke();
@@ -69,26 +71,50 @@ function football()
 		if (this.i1 > 0) this.i1--;
 		if (this.i2 > 0) this.i2--;
 	}
-}
-function returnButton() 
-{
-	this.w = width/3;
-	this.h = height/2-150/2;
-	this.x = 0+this.w;
-	this.y = height-35;
-	
-	this.display = function() 
+	this.ellipseX = width/2;
+	this.ellipseY = topHeight/2;
+	this.combinedTimeMin = 0;
+	this.timer = function() 
 	{
-		noFill();
-		strokeWeight(0);
-		//fill(255, 0, 0);
-		rect(this.x, this.y-this.h/6, this.w, this.h/3);
-		strokeWeight(10);
-		fill(220);
-		ellipse(this.x+this.w/2, this.y, this.h/3);
+		fill(this.col3);
+		ellipse(this.ellipseX, this.ellipseY, 120);
+		fill(255, 255, 255);
+		var data = new Date();
+		var n = data.getTime();
+		var present = round(data.getTime()/1000);
+		var combinedTime = (present-this.startTime)*60;
+		textAlign(CENTER);
+		textSize(20);
+		text(Math.floor(combinedTime/60) + " : " + combinedTime%60, this.ellipseX, this.ellipseY);
+		
+		if (Math.floor(combinedTime/60) >= 45)
+		{
+			this.col3 = color(255, 0, 0);
+		} else {
+			this.col3 = color(255, 255, 255);
+		}
+	}
+	this.clickedTimer = function()
+	{
+		var d = dist(this.ellipseX, this.ellipseY, mouseX, mouseY);
+		if (d < 120) {
+			var datas = new Date();
+			var ne = datas.getTime();
+			this.startTime = round(datas.getTime()/1000);
+			this.combinedTimeMin = 0;
+		}
 	}
 	
-	this.collide = function() 
+	this.showMenu = function() 
 	{
+		var x = width/2-200;
+		var y = 80;
+		rect(x, y, 400, 400);
+		
+		rect(x+10, y+10, 400-20, 100-20);
+		var c = cc();
+		rect(x+10, y+105, 400-20, 100-20);
+		rect(x+10, y+200, 400-20, 100-20);
+		rect(x+10, y+300, 400-20, 100-20);
 	}
 }
