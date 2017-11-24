@@ -500,7 +500,6 @@ function bottomBox() {
 	this.resized = function() {
 		this.makeBoxes();
 	}
-	
 	this.collide = function() 
 	{
 		if (this.boxCenter.cc()) {
