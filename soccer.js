@@ -9,7 +9,7 @@ function football()
 	this.playery = topHeight;
 	this.player2x = width/2;
 	this.w = width/2;
-	this.h = height/1.44;
+	this.h = height - topHeight - bottomHeight;
 	this.col = color(255, 255, 255);
 	this.col2 = color(255, 255, 255);
 	this.col3 = color(255, 255, 255);
@@ -26,8 +26,7 @@ function football()
 		stroke("black");
 		strokeWeight(3);
 		fill(0, 0, 0);
-		line(0, this.h+this.playery, width, this.playery+this.h); 
-		line(width/2, topHeight, width/2, height);
+		line(width/2, topHeight, width/2, height-bottomHeight);
 		textSize(200);
 		textAlign(CENTER);
 		text(this.team1Score, this.w/2, this.h/2+150);
@@ -73,6 +72,7 @@ function football()
 	}
 	this.ellipseX = width/2;
 	this.ellipseY = topHeight/2;
+	this.timerStarted = false;
 	this.combinedTimeMin = 0;
 	this.lastTime = 0;
 	this.timeTextOutdated = function() {
@@ -86,13 +86,22 @@ function football()
 		fill(this.col3);
 		ellipse(this.ellipseX, this.ellipseY, 120);
 		fill(255, 255, 255);
-		var date = new Date();
-		var n = date.getTime();
-		this.lastTime = round(date.getTime()/1000);
-		var combinedTime = (this.lastTime-this.startTime);
 		textAlign(CENTER);
 		textSize(20);
-		var timeText = Math.floor(combinedTime/60) + " : " + combinedTime%60;
+		console.log(timerStarted);
+		if (this.timerStarted) {
+			var date = new Date();
+			var n = date.getTime();
+			this.lastTime = round(date.getTime()/1000);
+			var combinedTime = (this.lastTime-this.startTime);
+			var secondText = combinedTime%60;
+			if (secondText < 10) {
+				secondText = "0" + secondText;
+			}
+			var timeText = Math.floor(combinedTime/60) + " : " + combinedTime%60;
+		} else {
+			var timeText = "0:00";
+		}
 		text(timeText, this.ellipseX, this.ellipseY);
 		
 		if (Math.floor(combinedTime/60) >= 45)
@@ -106,6 +115,9 @@ function football()
 	{
 		var d = dist(this.ellipseX, this.ellipseY, mouseX, mouseY);
 		if (d < 120) {
+			if (this.timerStarted === false) {
+				this.timerStarted = true;
+			}
 			var date = new Date();
 			var ne = date.getTime();
 			this.startTime = round(date.getTime()/1000);
