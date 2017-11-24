@@ -42,7 +42,8 @@ function enableNoSleep() {
 // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
 document.addEventListener('click', enableNoSleep, false);
 var mouseDelay = 0;
-function draw() {
+
+
 var modified = true;
 function draw() {
 	if (!modified) {
@@ -518,7 +519,6 @@ function bottomBox() {
 
 		//Redo button
 		ourTriangle(this.boxRightM, false);
-	}
 	
 	this.collide = function() 
 	{
