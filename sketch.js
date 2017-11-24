@@ -75,7 +75,6 @@ function draw() {
 	if (soccerActivated == true) 
 	{
 		Football.display();
-		Football.update();
 		bottomBox1.display();
 		topBox1.display();
 		Football.timer();

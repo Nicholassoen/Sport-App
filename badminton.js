@@ -93,7 +93,6 @@ function Badminton()
 			var that = this;
 			setTimeout(function() {that.doubleClickDisabled=false;}, 100);
 			setTimeout(function() {
-				console.log("called");
 				that.col = color(255, 255, 255);
 				that.col2 = color(255, 255, 255);
 				modified = true;

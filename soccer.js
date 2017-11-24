@@ -3,8 +3,6 @@ function football()
 	this.team1Score = 0;
 	this.team2Score = 0;
 	
-	this.i1 = 0;
-	this.i2 = 0;
 	this.col = color(255, 255, 255);
 	this.col2 = color(255, 255, 255);
 	this.col3 = color(255, 255, 255);
@@ -41,43 +39,46 @@ function football()
 		
 		text(this.team2Score, this.player1x+this.w*1.5, this.h/2+150);
 	}
-	
+
+	this.doubleClickDisabled = false;
 	this.collide = function()
 	{
+		if (this.doubleClickDisabled) {
+			return;
+		}
+		
 		var c = circleCollision(this.player1x, this.playery, this.w, this.h,
-												 mouseX, mouseY, 1, 1);
-		if (c == true && this.i1 == 0 && this.i2 == 0)
+					mouseX, mouseY, 1, 1);
+		var clicked = false;
+		if (c == true)
 		{
-			this.i1 = 20;
-			this.i2 = 20;
 			this.col = color(255, 0, 0);
 			this.team1Score++;
 			foo.speak(this.team1Score + "  " + this.team2Score + " to team 1");
+			clicked = true;
 		}
 		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
 												 mouseX, mouseY, 1, 1);
-		if (c2 == true && this.i2 == 0 && this.i1 == 0)
+		if (c2 == true)
 		{
-			this.i2 = 20;
-			this.i1 = 20;
 			this.col2 = color(255, 0, 0);
 			this.team2Score++;
+			clicked = true;
 		}
+
+		if (clicked) {
+			this.doubleClickDisabled = true;
+			var that = this;
+			setTimeout(function() {that.doubleClickDisabled=false;}, 100);
+			setTimeout(function() {
+				that.col = color(255, 255, 255);
+				that.col2 = color(255, 255, 255);
+				modified = true;
+			}, 300);
+		}
+
 	}
 	
-	this.update = function() 
-	{
-		if (this.i1 == 0) 
-		{
-			this.col = color(255, 255, 255);
-		}
-		if (this.i2 == 0) 
-		{
-			this.col2 = color(255, 255, 255);
-		}
-		if (this.i1 > 0) this.i1--;
-		if (this.i2 > 0) this.i2--;
-	}
 	this.timerStarted = false;
 	this.combinedTimeMin = 0;
 	this.lastTime = 0;
