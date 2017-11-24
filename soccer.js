@@ -109,7 +109,10 @@ function football()
 			var timeText = "0 : 00";
 		}
 		text(timeText, this.ellipseX, this.ellipseY);
-	
+		if (secondText >= maxTime) 
+		{
+			text("GAME OVER", width/2, height/2);
+		}
 		if (Math.floor(combinedTime/60) >= 45)
 		{
 			this.col3 = color(255, 0, 0);
