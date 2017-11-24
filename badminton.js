@@ -26,7 +26,7 @@ function Badminton()
 	this.display = function()
 	{
 		noStroke();
-		textSize(40);
+		textSize(topHeight/2);
 		fill(this.col);
 		rect(this.player1x, this.playery, this.w, this.h); //player 1
 		textAlign(CENTER); 
@@ -45,15 +45,19 @@ function Badminton()
 	
 	this.saet = function() 
 	{
-		textSize(100);
-		text(this.score, this.player1x+this.w/2, this.playery*2);
-		text(this.score12, this.player1x+this.w/2, this.playery*3);
-		text(this.score13, this.player1x+this.w/2, this.playery*4);
+		textSize(height/10);
+		offset1 = this.playery + 2*this.h/10;
+		offset2 = this.playery + 5*this.h/10;
+		offset3 = this.playery + 8*this.h/10;
+		
+		text(this.score, this.player1x+this.w/2, offset1);
+		text(this.score12, this.player1x+this.w/2, offset2);
+		text(this.score13, this.player1x+this.w/2, offset3);
 		
 		
-		text(this.score2, this.player2x+this.w/2, this.playery*2);
-		text(this.score22, this.player2x+this.w/2, this.playery*3);
-		text(this.score23, this.player2x+this.w/2, this.playery*4);
+		text(this.score2, this.player2x+this.w/2, offset1);
+		text(this.score22, this.player2x+this.w/2, offset2);
+		text(this.score23, this.player2x+this.w/2, offset3);
 		
 		if (this.player1Score == 2 && this.player2Score == 1 || this.player1Score == 2 && this.player2Score == 0 || this.player1Score == 3) 
 		{
@@ -93,7 +97,6 @@ function Badminton()
 			var that = this;
 			setTimeout(function() {that.doubleClickDisabled=false;}, 100);
 			setTimeout(function() {
-				console.log("called");
 				that.col = color(255, 255, 255);
 				that.col2 = color(255, 255, 255);
 				modified = true;
