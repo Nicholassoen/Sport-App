@@ -502,24 +502,6 @@ function bottomBox() {
 	}
 	
 	this.display = function() 
-	{
-		//line on top of bottom box
-		line(0, height-bottomHeight, width,  height-bottomHeight);
-
-		//Return bottom
-		strokeWeight(10);
-		fill(220);
-		ellipse(this.boxCenterM.x+this.boxCenterM.w/2,
-			this.boxCenterM.y+this.boxCenterM.h/2,
-			min(this.boxCenterM.w, this.boxCenterM.h)
-		       );
-
-		//Undo button
-		ourTriangle(this.boxLeftM, true);
-
-		//Redo button
-		ourTriangle(this.boxRightM, false);
-	
 	this.collide = function() 
 	{
 		if (this.boxCenter.cc()) {
