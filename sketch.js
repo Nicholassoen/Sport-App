@@ -24,7 +24,7 @@ function setup() {
 	bottomBox1 = new bottomBox();
 	foo = new p5.Speech();
 	foo.speak("Voice initialized");
-	
+	frameRate(30);
 }
 
 function windowResized() 
