@@ -271,6 +271,7 @@ function topBox() {
 			this.removeElement();
 			break;
 		}
+		modified = true;
 	}
 }
 
