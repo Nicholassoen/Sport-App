@@ -109,7 +109,7 @@ function football()
 			var timeText = "0 : 00";
 		}
 		text(timeText, this.ellipseX, this.ellipseY);
-		
+	
 		if (Math.floor(combinedTime/60) >= 45)
 		{
 			this.col3 = color(255, 0, 0);

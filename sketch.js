@@ -84,6 +84,9 @@ function draw() {
 		Football.timer();
 		if (showSoccerMenu) {
 			Football.showMenu();
+			Football.timerStarted = false;
+		} else {
+			Football.timerStarted = true;
 		}
 		bottomBox1.resetButton();
 	}
@@ -120,14 +123,18 @@ function mousePressed()
 		topBox1.collide();
 	} else if (soccerActivated) 
 	{
-		Football.collide();
 		bottomBox1.collide();
 		topBox1.collide();
 		Football.clickedTimer();
 		startButton1.resetButtonCollide();
 		if (showSoccerMenu)
 		{
-			Football.clickedMenu();
+		 	Football.clickedMenu();
+		} else {
+			Football.collide();
+			var date = new Date();
+			var ne = date.getTime();
+			this.startTime = round(date.getTime()/1000);
 		}
 	}
 
@@ -368,6 +375,9 @@ function startButton()
 			
 			Football.maxTime = 0;
 			showSoccerMenu = true;
+			Football.team1Score = 0;
+			Football.team2Score = 0;
+			Football.timerStarted = false;
 			print("worked");
 		}
 	}
