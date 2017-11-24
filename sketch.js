@@ -81,7 +81,11 @@ function draw() {
 		bottomBox1.display();
 		topBox1.display();
 		Football.timer();
-		Football.showMenu();
+		if (showSoccerMenu) {
+			Football.showMenu();
+		}
+	}  else {
+		showSoccerMenu = false;
 	}
 	if (surprise == true) 
 	{
