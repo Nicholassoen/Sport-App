@@ -26,7 +26,7 @@ function Badminton()
 	this.display = function()
 	{
 		noStroke();
-		textSize(40);
+		textSize(topHeight/2);
 		fill(this.col);
 		rect(this.player1x, this.playery, this.w, this.h); //player 1
 		textAlign(CENTER); 
@@ -45,7 +45,7 @@ function Badminton()
 	
 	this.saet = function() 
 	{
-		textSize(100);
+		textSize(height/10);
 		text(this.score, this.player1x+this.w/2, this.playery*2);
 		text(this.score12, this.player1x+this.w/2, this.playery*3);
 		text(this.score13, this.player1x+this.w/2, this.playery*4);

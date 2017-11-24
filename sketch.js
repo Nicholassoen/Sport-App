@@ -18,6 +18,8 @@ function preload()
 var foo;
 function setup() {
 	createCanvas(windowWidth, windowHeight);
+	setTopHeight();
+	setBottomHeight();
 	startButton1 = new startButton();
 	badminton = new Badminton();
 	Football = new football();
@@ -31,6 +33,8 @@ function setup() {
 function windowResized() 
 {
 	resizeCanvas(windowWidth, windowHeight);
+	setTopHeight();
+	setBottomHeight();
 	bottomBox1.resized();
 	Football.resized();
 	badminton.resized();
@@ -162,7 +166,11 @@ function cc(x, y, w, h) {
 	return circleCollision(x, y, w, h, mouseX, mouseY, 1, 1);
 }
 
-var topHeight = 110;
+var topHeight;
+function setTopHeight() {
+	topHeight = min(110, floor(height/6));
+}
+
 function topBox() {
 	this.leftName = "Player 1";
 	this.rightName = "Player 2";
@@ -362,7 +370,11 @@ function startButton()
 		
 	}
 }
-var bottomHeight = 150;
+var bottomHeight;
+function setBottomHeight() {
+	bottomHeight = min(150, height/6);
+}
+
 function bottomBox() {
 	this.makeBoxes = function() {
 		this.boxLeft = new boks(0, height-bottomHeight, width/4, bottomHeight);
