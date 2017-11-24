@@ -124,7 +124,7 @@ function mousePressed()
 		bottomBox1.collide();
 		topBox1.collide();
 		Football.clickedTimer();
-		bottomBox1.resetButtonCollide();
+		startButton1.resetButtonCollide();
 		if (showSoccerMenu)
 		{
 			Football.clickedMenu();
