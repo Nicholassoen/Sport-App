@@ -75,18 +75,18 @@ function Badminton()
 		
 		if (this.player1Score == 2 && this.player2Score == 1 || this.player1Score == 2 && this.player2Score == 0 || this.player1Score == 3) 
 		{
-			foo.speak(topBox1.leftName + " won the match");
+			foo.speak(topBox1.leftName + " har vundet kampen");
 			textSize(80);
 			fill(255, 0, 0);
-			text(topBox1.leftName + " won the match", width/2, height/2);
+			text(topBox1.leftName + " har vundet kampen", width/2, height/2);
 		}
 		
 		if (this.player2Score == 2 && this.player1Score == 1 || this.player2Score == 2 && this.player1Score == 0 || this.player2Score == 3)
 		{
 			textSize(80);
 			fill(255, 0, 0);
-			text(topBox1.rightName + " won the match", width/2, height/2);
-			foo.speak(topBox1.rightName + " won the match");
+			text(topBox1.rightName + " har vundet kampen", width/2, height/2);
+			foo.speak(topBox1.rightName + " har vundet kampen");
 		}
 	}
 
@@ -123,7 +123,7 @@ function Badminton()
 	this.clickLeft = function() {
 		if (this.score != 11 && this.score2 != 11) {
 			this.score++;
-			foo.speak(this.score + "  " + this.score2 + " to " + topBox1.leftName);
+			foo.speak(this.score + "  " + this.score2 + " til " + topBox1.leftName);
 			if (this.score == 11) 
 			{
 				this.player1Score++;
@@ -132,7 +132,7 @@ function Badminton()
 		{
 			if (this.score == 11) foo.speak("Sæt færdig gjort");
 			this.score12++;
-			foo.speak(this.score12 + "  " + this.score22 + " to " + topBox1.leftName);
+			foo.speak(this.score12 + "  " + this.score22 + " til " + topBox1.leftName);
 			if (this.score12 == 11) 
 			{
 				this.player1Score++;
@@ -141,7 +141,7 @@ function Badminton()
 		{
 			if (this.score12 == 11) foo.speak("Sæt færdig gjort");
 			this.score13++;
-			foo.speak(this.score13 + "  " + this.score23 + " to " + topBox1.leftName);
+			foo.speak(this.score13 + "  " + this.score23 + " til " + topBox1.leftName);
 			if (this.score13 == 11) 
 			{
 				this.player1Score++;
@@ -153,7 +153,7 @@ function Badminton()
 	this.clickRight = function() {
 		if (this.score2 != 11 && this.score != 11) {
 			this.score2++;
-			foo.speak(this.score2 + "  " + this.score + " to " + topBox1.rightName);
+			foo.speak(this.score2 + "  " + this.score + " til " + topBox1.rightName);
 			if (this.score2 == 11) 
 			{
 				this.player2Score++;
@@ -162,7 +162,7 @@ function Badminton()
 		{
 			if (this.score2 == 11) foo.speak("Sæt færdig gjort");
 			this.score22++;
-			foo.speak(this.score22 + "  " + this.score12 + " to " + topBox1.rightName);
+			foo.speak(this.score22 + "  " + this.score12 + " til " + topBox1.rightName);
 			if (this.score22 == 11) 
 			{
 				this.player2Score++;
@@ -171,7 +171,7 @@ function Badminton()
 		{
 			if (this.score22 == 11) foo.speak("Sæt færdig gjort");
 			this.score23++;
-			foo.speak(this.score23 + "  " + this.score13 + " to " + topBox1.rightName);
+			foo.speak(this.score23 + "  " + this.score13 + " til " + topBox1.rightName);
 			if (this.score23 == 11) 
 			{
 				this.player2Score++;

@@ -54,7 +54,7 @@ function football()
 		{
 			this.col = color(255, 0, 0);
 			this.team1Score++;
-			foo.speak(this.team1Score + "  " + this.team2Score + " til hold 1");
+			foo.speak(this.team1Score + "  " + this.team2Score + " til " + topBox1.leftName);
 			clicked = true;
 		}
 		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
@@ -63,7 +63,7 @@ function football()
 		{
 			this.col2 = color(255, 0, 0);
 			this.team2Score++;
-			foo.speak(this.team2Score + "  " + this.team1Score + " til hold 2");
+			foo.speak(this.team2Score + "  " + this.team1Score + " til " + topBox1.rightName);
 			clicked = true;
 		}
 
@@ -110,7 +110,7 @@ function football()
 			var timeText = "0 : 00";
 		}
 		text(timeText, this.ellipseX, this.ellipseY);
-		if (secondText >= maxTime) 
+		if (secondText >= this.maxTime*60) 
 		{
 			text("Spillet er færdigt", width/2, height/2);
 			foo.speak("Spillet er færdigt")

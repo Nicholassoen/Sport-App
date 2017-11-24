@@ -352,7 +352,7 @@ function startButton()
 		rect(x-w/2, y, w, h);
 		fill(255, 0, 0);
 		textAlign(CENTER);
-		text("Reset", width/2, y+h/2);
+		text("Reset", width/2, y+h/2+100);
 	}
 	this.resetButtonCollide = function() 
 	{
@@ -447,7 +447,8 @@ function bottomBox() {
 		rect(this.boxCenterRight.x, this.boxCenterRight.y, this.boxCenterRight.w, this.boxCenterRight.h);
 		fill(255, 0, 0);
 		textAlign(CENTER);
-		text("Reset", this.boxCenterRight.x+this.boxCenterRight.w/2, this.boxCenterRight.y+this.boxCenterRight.h/2);
+		textSize(50);
+		text("Reset", this.boxCenterRight.x+this.boxCenterRight.w/2, this.boxCenterRight.y+this.boxCenterRight.h/2+25);
 	}
 }
 
