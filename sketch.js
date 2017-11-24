@@ -244,13 +244,17 @@ function topBox() {
 		this.middleBox = new boks(2/5*width, 0, 1/5*width, topHeight);
 		this.rightBox = new boks(3/5*width, 0, 2/5*width, topHeight);
 
-		var leftm = this.leftBox.addMargin(10);
+		var leftm = this.leftBox.addMargin(5);
 
-		var rightm = this.rightBox.addMargin(10);
+		var rightm = this.rightBox.addMargin(5);
 
 		noFill();
-		strokeWeight(3);
-		textSize(leftm.h*9/10);
+		strokeWeight(2);
+		var size = leftm.h;
+		var maxLength = max(this.leftName.length, this.rightName.length);
+		size /= max(1, maxLength/8);
+		textSize(size);
+		textAlign(CENTER, CENTER);
 		if (this.editName !== "left") {
 			text(this.leftName, leftm.x, leftm.y, leftm.w, leftm.h);
 		}
@@ -352,7 +356,8 @@ function startButton()
 		rect(x-w/2, y, w, h);
 		fill(255, 0, 0);
 		textAlign(CENTER);
-		text("Reset", width/2, y+h/2+100);
+		textSize(min(width/12,bottomHeight));
+		text("Reset", width/2, y+h/2);
 	}
 	this.resetButtonCollide = function() 
 	{
@@ -447,8 +452,8 @@ function bottomBox() {
 		rect(this.boxCenterRight.x, this.boxCenterRight.y, this.boxCenterRight.w, this.boxCenterRight.h);
 		fill(255, 0, 0);
 		textAlign(CENTER);
-		textSize(50);
-		text("Reset", this.boxCenterRight.x+this.boxCenterRight.w/2, this.boxCenterRight.y+this.boxCenterRight.h/2+25);
+		textSize(min(width/12,bottomHeight));
+		text("Reset", this.boxCenterRight.x+this.boxCenterRight.w/2, this.boxCenterRight.y+this.boxCenterRight.h/2);
 	}
 }
 
