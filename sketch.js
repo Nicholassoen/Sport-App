@@ -250,7 +250,11 @@ function topBox() {
 
 		noFill();
 		strokeWeight(3);
-		textSize(leftm.h*9/10);
+		var size = leftm.h*9/10;
+		var maxLength = max(this.leftName.length, this.rightName.length);
+		size /= max(1, ceil(maxLength/8));
+		textSize(size);
+		textAlign(CENTER, CENTER);
 		if (this.editName !== "left") {
 			text(this.leftName, leftm.x, leftm.y, leftm.w, leftm.h);
 		}
