@@ -42,7 +42,18 @@ function enableNoSleep() {
 // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
 document.addEventListener('click', enableNoSleep, false);
 
-function draw() { 
+var modified = true;
+function draw() {
+	if (!modified) {
+		if (!(soccerActivated && Football.timeTextOutdated())) {
+			//console.log("not updating");
+			return;			
+		}
+	}
+	modified = false;
+	//console.log("updating");
+
+	
 	background(220);
 	fill(255, 255, 255);
 	strokeWeight(1);
@@ -76,6 +87,7 @@ function draw() {
 var mouseDelay = 0;
 function mousePressed()
 {
+	modified = true;
 	if (mouseDelay < 2) mouseDelay++;
 	if (showMenu == true)
 	{
