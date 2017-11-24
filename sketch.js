@@ -83,9 +83,6 @@ function draw() {
 		Football.timer();
 		if (showSoccerMenu) {
 			Football.showMenu();
-			Football.timerStarted = false;
-		} else {
-			Football.timerStarted = true;
 		}
 		bottomBox1.resetButton();
 	}

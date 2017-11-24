@@ -110,7 +110,7 @@ function football()
 			var timeText = "0 : 00";
 		}
 		text(timeText, this.ellipseX, this.ellipseY);
-		if (secondText >= maxTime) 
+		if (secondText >= this.maxTime) 
 		{
 			text("Spillet er færdigt", width/2, height/2);
 			foo.speak("Spillet er færdigt")
