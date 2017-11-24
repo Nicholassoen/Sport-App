@@ -1,4 +1,4 @@
-function bEvent(name, p11, p12, p13, p21, p22, p23) {
+function bEvent(name, p11, p12, p13, p21, p22, p23, player1Score, player2Score) {
 	this.name = name;
 	this.p11 = p11;
 	this.p12 = p12;
@@ -6,6 +6,9 @@ function bEvent(name, p11, p12, p13, p21, p22, p23) {
 	this.p21 = p21;
 	this.p22 = p22;
 	this.p23 = p23;
+
+	this.player1Score = player1Score;
+	this.player2Score = player2Score;
 }
 
 function Badminton()
@@ -51,6 +54,7 @@ function Badminton()
 		
 		//Sætene
 		textAlign(CENTER);
+		this.saet();
 	}
 	
 	this.saet = function() 
@@ -180,13 +184,13 @@ function Badminton()
 	this.reset = function() {
 		this.addEvent();
 		
-		badminton.score = 0;
-		badminton.score12 = 0;
-		badminton.score13 = 0;
+		this.score = 0;
+		this.score12 = 0;
+		this.score13 = 0;
 				
-		badminton.score2 = 0;
-		badminton.score22 = 0;
-		badminton.score23 = 0;
+		this.score2 = 0;
+		this.score22 = 0;
+		this.score23 = 0;
 				
 		badminton.player1Score = 0;
 		badminton.player2Score = 0;
@@ -199,7 +203,8 @@ function Badminton()
 	this.getState = function() {
 		var e = new bEvent("point",
 				   this.score, this.score12, this.score13,
-				   this.score2, this.score22, this.score23
+				   this.score2, this.score22, this.score23,
+				   this.player1Score, this.player2Score
 				  );
 		return e;
 	}
@@ -208,15 +213,17 @@ function Badminton()
 		var e = this.getState();
 		this.eventQ.push(e);
 	}
-	this.addEvent(); //Initial state (0-0)
 
 	this.applyE = function(e) {
 		this.score = e.p11;
 		this.score12 = e.p12;
 		this.score13 = e.p13;
-		this.score21 = e.p21;
+		this.score2 = e.p21;
 		this.score22 = e.p22;
 		this.score23 = e.p23;
+		this.player1Score = e.player1Score;
+		this.player2Score = e.player2Score;
+		modified = true;
 	}
 
 	this.undo = function() {
@@ -225,18 +232,19 @@ function Badminton()
 			this.eventQRedo.push(eNow);
 			var e = this.eventQ.pop();
 			this.applyE(e);
+		} else {
+			console.log("no undo!");
 		}
 	}
 
 	this.redo = function() {
-		console.log("here3");
 		if (this.eventQRedo.length > 0) {
-			console.log("here4");
 			var eNow = this.getState();
 			this.eventQ.push(eNow);
 			var e = this.eventQRedo.pop();
 			this.applyE(e);
-		}		
+		} else {
+			console.log("no undo!");
+		}
 	}
 }
-

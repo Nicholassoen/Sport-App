@@ -71,7 +71,6 @@ function draw() {
 	if (badmintonActivated == true) 
 	{
 		badminton.display();
-		badminton.saet();
 		bottomBox1.display();
 		topBox1.display();
 		bottomBox1.resetButton();
@@ -119,7 +118,6 @@ function mousePressed()
 	{
 		badminton.collide();
 		bottomBox1.collide();
-		bottomBox1.resetButtonCollide();
 		topBox1.collide();
 	} else if (soccerActivated) 
 	{
@@ -437,9 +435,7 @@ function bottomBox() {
 				badminton.reset();
 			}
 		} else if (this.boxRight.cc()) {
-			console.log("here");
 			if (badmintonActivated) {
-				console.log("here2");
 				badminton.redo();
 			}
 		}
