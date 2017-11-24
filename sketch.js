@@ -42,8 +42,6 @@ function enableNoSleep() {
 // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
 document.addEventListener('click', enableNoSleep, false);
 var mouseDelay = 0;
-
-
 var modified = true;
 function draw() {
 	if (!modified) {
@@ -62,7 +60,6 @@ function draw() {
 	if (showMenu == true)  
 	{
 		startButton1.display();
-		startButton1.resetButton();
 	}
 
 	if (badmintonActivated == true) 
@@ -72,6 +69,7 @@ function draw() {
 		badminton.saet();
 		bottomBox1.display();
 		topBox1.display();
+		bottomBox1.resetButton();
 	}
 	if (soccerActivated == true) 
 	{
@@ -94,13 +92,13 @@ function mousePressed()
 	if (showMenu == true)
 	{
 		startButton1.collide();
-		startButton1.resetButtonCollide();
 	}
 	
 	if (badmintonActivated == true) 
 	{
 		badminton.collide();
 		bottomBox1.collide();
+		bottomBox1.resetButtonCollide();
 		topBox1.collide();
 	}
 	if (soccerActivated) 
@@ -316,179 +314,37 @@ function startButton()
 		rect(x-w/2, y, w, h);
 		fill(255, 0, 0);
 		textAlign(CENTER);
-		text("Reset", x+w/12, y+h/2);
+		text("Reset", width/2, y+h/2);
 	}
 	this.resetButtonCollide = function() 
 	{
 		var d = cc(x, y, w, h);
 		print(d);
+		if (cc == true) 
+		{
+			badminton.score = 0;
+			badminton.score12 = 0;
+			badminton.score13 = 0;
+			
+			badminton.score2 = 0;
+			badminton.score22 = 0;
+			badminton.score23 = 0;
+			
+			badminton.player1Score = 0;
+			badminton.player2Score = 0;
+			
+			
+		}
+		
 	}
 }
-var i1 = 0;
-var i2 = 0;
-function Badminton()
-{
-	this.score = 0;
-	this.score12 = 0;
-	this.score13 = 0;
-	
-	this.score2 = 0;
-	this.score22 = 0;
-	this.score23 = 0;
-	
-	this.player1Score = 0;
-	this.player2Score = 0;
-	
-	this.player1x = 0;
-	this.playery = topHeight;
-	this.player2x = width/2;
-	this.w = width/2;
-	this.h = height-topHeight-bottomHeight;
-	this.col = color(255, 255, 255);
-	this.col2 = color(255, 255, 255);
-	this.display = function()
-	{
-		noStroke();
-		textSize(40);
-		fill(this.col);
-		rect(this.player1x, this.playery, this.w, this.h); //player 1
-		textAlign(CENTER); 
-		fill(this.col2);
-		rect(this.player2x, this.playery, this.w, this.h); //player 2
-		stroke("black");
-		strokeWeight(3);
-		fill(0, 0, 0);
-
-		//vertical divider line
-		line(width/2, topHeight, width/2, height-bottomHeight);
-		
-		//Sætene
-		textAlign(CENTER);
-	}
-	
-	this.saet = function() 
-	{
-		textSize(100);
-		text(this.score, this.player1x+this.w/2, this.playery*2);
-		text(this.score12, this.player1x+this.w/2, this.playery*3);
-		text(this.score13, this.player1x+this.w/2, this.playery*4);
-		
-		
-		text(this.score2, this.player2x+this.w/2, this.playery*2);
-		text(this.score22, this.player2x+this.w/2, this.playery*3);
-		text(this.score23, this.player2x+this.w/2, this.playery*4);
-		
-		if (this.player1Score == 2 && this.player2Score == 1 || this.player1Score == 2 && this.player2Score == 0 || this.player1Score == 3) 
-		{
-			foo.speak(topBox1.leftName + " won the match");
-			textSize(80);
-			fill(255, 0, 0);
-			text(topBox1.leftName + " won the match", width/2, height/2);
-		}
-		
-		if (this.player2Score == 2 && this.player1Score == 1 || this.player2Score == 2 && this.player1Score == 0 || this.player2Score == 3)
-		{
-			textSize(80);
-			fill(255, 0, 0);
-			text(topBox1.rightName + " won the match", width/2, height/2);
-			foo.speak(topBox1.rightName + " won the match");
-		}
-	}
-	
-	this.collide = function()
-	{
-		var c = circleCollision(this.player1x, this.playery, this.w, this.h,
-												 mouseX, mouseY, 1, 1);
-		if (c == true && i1 == 0 && i2 == 0)
-		{
-			if (this.score != 11 && this.score2 != 11) {
-				this.score++;
-				foo.speak(this.score + "  " + this.score2 + " to " + topBox1.leftName);
-				if (this.score == 11) 
-				{
-					this.player1Score++;
-				}
-			} else if(this.score12 != 11 && this.score22 != 11)
-			{
-				if (this.score == 11) foo.speak("Sæt færdig gjort");
-				this.score12++;
-				foo.speak(this.score12 + "  " + this.score22 + " to " + topBox1.leftName);
-				if (this.score12 == 11) 
-				{
-					this.player1Score++;
-				}
-			} else if(this.score13 != 11 && this.score23 != 11) 
-			{
-				if (this.score12 == 11) foo.speak("Sæt færdig gjort");
-				this.score13++;
-				this.player1Score++;
-				foo.speak(this.score13 + "  " + this.score23 + " to " + topBox1.leftName);
-				if (this.score13 == 11) 
-				{
-					this.player1Score++;
-				}
-			}
-			i1 = 20;
-			i2 = 20;
-			this.col = color(255, 0, 0);
-		}
-		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
-												 mouseX, mouseY, 1, 1);
-		if (c2 == true && i2 == 0 && i1 == 0)
-		{
-			if (this.score2 != 11 && this.score != 11) {
-				this.score2++;
-				foo.speak(this.score2 + "  " + this.score + " to " + topBox1.rightName);
-				if (this.score2 == 11) 
-				{
-					this.player2Score++;
-				}
-			} else if(this.score22 != 11 && this.score12 != 11)
-			{
-				if (this.score2 == 11) foo.speak("Sæt færdig gjort");
-				this.score22++;
-				foo.speak(this.score22 + "  " + this.score12 + " to " + topBox1.rightName);
-				if (this.score22 == 11) 
-				{
-					this.player2Score++;
-				}
-			} else if(this.score23 != 11 && this.score13 != 11) 
-			{
-				if (this.score22 == 11) foo.speak("Sæt færdig gjort");
-				this.score23++;
-				foo.speak(this.score23 + "  " + this.score13 + " to " + topBox1.rightName);
-				if (this.score23 == 11) 
-				{
-					this.player2Score++;
-				}
-			}		
-			i2 = 20;
-			i1 = 20;
-			this.col2 = color(255, 0, 0);
-		}
-	}
-	
-	this.update = function() 
-	{
-		if (i1 == 0) 
-		{
-			this.col = color(255, 255, 255);
-		}
-		if (i2 == 0) 
-		{
-			this.col2 = color(255, 255, 255);
-		}
-		if (i1 > 0) i1--;
-		if (i2 > 0) i2--;
-	}
-}
-
 var bottomHeight = 150;
 function bottomBox() {
 	this.makeBoxes = function() {
-		this.boxLeft = new boks(0, height-bottomHeight, width/3, bottomHeight);
-		this.boxCenter = new boks(width/3, height-bottomHeight, width/3, bottomHeight);
-		this.boxRight = new boks(2*width/3, height-bottomHeight, width/3, bottomHeight);
+		this.boxLeft = new boks(0, height-bottomHeight, width/4, bottomHeight);
+		this.boxCenter = new boks(width/4, height-bottomHeight, width/3, bottomHeight);
+		this.boxCenterRight = new boks(2*width/4, height-bottomHeight, width/4, bottomHeight);
+		this.boxRight = new boks(3*width/4, height-bottomHeight, width/3, bottomHeight);
 
 		var margin = min(width, bottomHeight)/10;
 		this.boxLeftM = this.boxLeft.addMargin(margin);
@@ -496,7 +352,25 @@ function bottomBox() {
 		this.boxRightM = this.boxRight.addMargin(margin);
 	}
 	this.makeBoxes();
+	this.display = function() 
+	{
+		//line on top of bottom box
+		line(0, height-bottomHeight, width,  height-bottomHeight);
 
+		//Return bottom
+		strokeWeight(10);
+		fill(220);
+		ellipse(this.boxCenterM.x+this.boxCenterM.w/2,
+			this.boxCenterM.y+this.boxCenterM.h/2,
+			min(this.boxCenterM.w, this.boxCenterM.h)
+		       );
+
+		//Undo button
+		ourTriangle(this.boxLeftM, true);
+
+		//Redo button
+		ourTriangle(this.boxRightM, false);
+	}
 	this.resized = function() {
 		this.makeBoxes();
 	}
@@ -507,6 +381,34 @@ function bottomBox() {
 			badmintonActivated = false;
 			soccerActivated = false;
 		}
+	}
+	
+	this.resetButton = function() 
+	{
+		fill(255, 255, 255);
+		rect(this.boxCenterRight.x, this.boxCenterRight.y, this.boxCenterRight.w, this.boxCenterRight.h);
+		fill(255, 0, 0);
+		textAlign(CENTER);
+		text("Reset", this.boxCenterRight.x+this.boxCenterRight.w/2, this.boxCenterRight.y+this.boxCenterRight.h/2);
+	}
+	this.resetButtonCollide = function() 
+	{
+		if (this.boxCenterRight == true) 
+		{
+			badminton.score = 0;
+			badminton.score12 = 0;
+			badminton.score13 = 0;
+			
+			badminton.score2 = 0;
+			badminton.score22 = 0;
+			badminton.score23 = 0;
+			
+			badminton.player1Score = 0;
+			badminton.player2Score = 0;
+			
+			
+		}
+		
 	}
 }
 
@@ -554,16 +456,3 @@ function boks(x, y, w ,h) {
 		return circleCollision(this.x, this.y, this.w, this.h, mouseX, mouseY, 1, 1);
 	}
 }
-/*if (cc == true) 
-		{
-			badminton.score = 0;
-			badminton.score12 = 0;
-			badminton.score13 = 0;
-			
-			badminton.score2 = 0;
-			badminton.score22 = 0;
-			badminton.score23 = 0;
-			
-			badminton.player1Score = 0;
-			badminton.player2Score = 0;
-		}*/
