@@ -71,7 +71,6 @@ function draw() {
 	if (badmintonActivated == true) 
 	{
 		badminton.display();
-		badminton.saet();
 		bottomBox1.display();
 		topBox1.display();
 		bottomBox1.resetButton();
@@ -119,7 +118,6 @@ function mousePressed()
 	{
 		badminton.collide();
 		bottomBox1.collide();
-		bottomBox1.resetButtonCollide();
 		topBox1.collide();
 	} else if (soccerActivated) 
 	{
@@ -424,23 +422,22 @@ function bottomBox() {
 	}
 	this.collide = function() 
 	{
-		if (this.boxCenter.cc()) {
+		if (this.boxLeft.cc()) {
+			if (badmintonActivated) {
+				badminton.undo();
+			}
+		} else if (this.boxCenter.cc()) {
 			showMenu = true;
 			badmintonActivated = false;
 			soccerActivated = false;
-		}
-		if (this.boxCenterRight.cc()) { 
-				print("tst");
-				badminton.score = 0;
-				badminton.score12 = 0;
-				badminton.score13 = 0;
-				
-				badminton.score2 = 0;
-				badminton.score22 = 0;
-				badminton.score23 = 0;
-				
-				badminton.player1Score = 0;
-				badminton.player2Score = 0;
+		} else if (this.boxCenterRight.cc()) { 
+			if (badmintonActivated) {
+				badminton.reset();
+			}
+		} else if (this.boxRight.cc()) {
+			if (badmintonActivated) {
+				badminton.redo();
+			}
 		}
 	}
 	
