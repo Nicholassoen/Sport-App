@@ -9,6 +9,7 @@ function football()
 	this.col2 = color(255, 255, 255);
 	this.col3 = color(255, 255, 255);
 	this.startTime = 0;
+	this.maxTime = 5;
 
 	this.resized = function() {
 		this.player1x = 0;
@@ -82,7 +83,6 @@ function football()
 	this.lastTime = 0;
 	this.timeTextOutdated = function() {
 		var d = new Date();
-		console.log(round(d.getTime()/1000) +"!="+ this.lastTime);
 		return round(d.getTime()/1000) != this.lastTime;
 	};
 	
@@ -134,12 +134,57 @@ function football()
 	{
 		var x = width/2-200;
 		var y = 80;
+		var w = 400-20;
+		var h = 100-20;
 		rect(x, y, 400, 400);
 		
-		rect(x+10, y+10, 400-20, 100-20);
-		var c = cc();
-		rect(x+10, y+105, 400-20, 100-20);
-		rect(x+10, y+200, 400-20, 100-20);
-		rect(x+10, y+300, 400-20, 100-20);
+		rect(x+10, y+10, w, h);
+		text("10 minutter" ,x+10+w/2, y+10+h/2);
+		var c = cc(x+10, y+10, w, h);
+		if (c) {maxTime = 5}
+		
+		rect(x+10, y+105, w, h);
+		text("20 minutter" ,x+10+w/2, y+105+h/2);
+		var c2 = cc(x+10, y+105, w, h);
+		if (c2) {maxTime = 10}
+		
+		rect(x+10, y+200, w, h);
+		text("30 minutter" ,x+10+w/2, y+200+h/2);
+		var c3 = cc(x+10, y+200, w, h);
+		if (c3) {maxTime = 15}
+		
+		rect(x+10, y+300, w, h);
+		text("45 minutter" ,x+10+w/2, y+300+h/2);
+		var c4 = cc(x+10, y+300, w, h);
+		if (c4) {maxTime = 10}
+	}
+	this.clickedMenu = function() 
+	{
+		var x = width/2-200;
+		var y = 80;
+		var w = 400-20;
+		var h = 100-20;
+		rect(x, y, 400, 400);
+		
+		rect(x+10, y+10, w, h);
+		text("10 minutter" ,x+10+w/2, y+10+h/2);
+		var c = cc(x+10, y+10, w, h);
+		if (c) {this.maxTime = 10}
+		
+		rect(x+10, y+105, w, h);
+		text("20 minutter" ,x+10+w/2, y+105+h/2);
+		var c2 = cc(x+10, y+105, w, h);
+		if (c2) {this.maxTime = 20}
+		
+		rect(x+10, y+200, w, h);
+		text("30 minutter" ,x+10+w/2, y+200+h/2);
+		var c3 = cc(x+10, y+200, w, h);
+		if (c3) {this.maxTime = 30}
+		
+		rect(x+10, y+300, w, h);
+		text("45 minutter" ,x+10+w/2, y+300+h/2);
+		var c4 = cc(x+10, y+300, w, h);
+		if (c4) {this.maxTime = 45}
+		print(c4);
 	}
 }

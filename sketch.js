@@ -7,6 +7,7 @@ var surpriseIcon;
 var surprise = false;
 var timerStarted = true;
 var bottomBox1;
+var showSoccerMenu = false;
 function preload()
 {
 	surpriseIcon = loadImage("kartofler.png");
@@ -110,6 +111,7 @@ function mousePressed()
 		bottomBox1.collide();
 		topBox1.collide();
 		Football.clickedTimer();
+		Football.clickedMenu();
 	}
 
 	return false
@@ -303,6 +305,7 @@ function startButton()
 		{
 			showMenu = false;
 			soccerActivated = true;
+			showSoccerMenu = true;
 		}
 	}
 	
@@ -383,6 +386,19 @@ function bottomBox() {
 			badmintonActivated = false;
 			soccerActivated = false;
 		}
+		if (this.boxCenterRight.cc()) { 
+				print("tst");
+				badminton.score = 0;
+				badminton.score12 = 0;
+				badminton.score13 = 0;
+				
+				badminton.score2 = 0;
+				badminton.score22 = 0;
+				badminton.score23 = 0;
+				
+				badminton.player1Score = 0;
+				badminton.player2Score = 0;
+		}
 	}
 	
 	this.resetButton = function() 
@@ -397,6 +413,7 @@ function bottomBox() {
 	{
 		if (this.boxCenterRight == true) 
 		{
+			print(this.boxCenterRight.cc());
 			badminton.score = 0;
 			badminton.score12 = 0;
 			badminton.score13 = 0;
