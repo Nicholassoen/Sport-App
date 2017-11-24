@@ -82,6 +82,7 @@ function draw() {
 		if (showSoccerMenu) {
 			Football.showMenu();
 		}
+		bottomBox1.resetButton();
 	}
 	
 	if (surprise == true) 
@@ -117,10 +118,10 @@ function mousePressed()
 	} else if (soccerActivated) 
 	{
 		Football.collide();
-		Football.collide();
 		bottomBox1.collide();
 		topBox1.collide();
 		Football.clickedTimer();
+		bottomBox1.resetButtonCollide();
 		if (showSoccerMenu)
 		{
 			Football.clickedMenu();
@@ -293,7 +294,7 @@ function myInputEvent(){
 
 function startButton() 
 {
-	this.w = 200;	
+	this.w = 200;
 	this.h = 200;
 	this.x = 50;
 	this.y = height/2;
@@ -343,9 +344,9 @@ function startButton()
 	}
 	this.resetButtonCollide = function() 
 	{
-		var d = cc(x, y, w, h);
+		var d = cc(width/2-w/2, 50, 100, 100);
 		print(d);
-		if (cc == true) 
+		if (d == true)
 		{
 			badminton.score = 0;
 			badminton.score12 = 0;
@@ -358,9 +359,10 @@ function startButton()
 			badminton.player1Score = 0;
 			badminton.player2Score = 0;
 			
-			
+			Football.maxTime = 0;
+			showSoccerMenu = true;
+			print("worked");
 		}
-		
 	}
 }
 var bottomHeight = 150;
@@ -428,26 +430,6 @@ function bottomBox() {
 		fill(255, 0, 0);
 		textAlign(CENTER);
 		text("Reset", this.boxCenterRight.x+this.boxCenterRight.w/2, this.boxCenterRight.y+this.boxCenterRight.h/2);
-	}
-	this.resetButtonCollide = function() 
-	{
-		if (this.boxCenterRight == true) 
-		{
-			print(this.boxCenterRight.cc());
-			badminton.score = 0;
-			badminton.score12 = 0;
-			badminton.score13 = 0;
-			
-			badminton.score2 = 0;
-			badminton.score22 = 0;
-			badminton.score23 = 0;
-			
-			badminton.player1Score = 0;
-			badminton.player2Score = 0;
-			
-			
-		}
-		
 	}
 }
 
