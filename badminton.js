@@ -11,13 +11,18 @@ function Badminton()
 	this.player1Score = 0;
 	this.player2Score = 0;
 	
-	this.player1x = 0;
-	this.playery = topHeight;
-	this.player2x = width/2;
-	this.w = width/2;
-	this.h = height-topHeight-bottomHeight;
 	this.col = color(255, 255, 255);
 	this.col2 = color(255, 255, 255);
+
+	this.resized = function() {
+		this.player1x = 0;
+		this.playery = topHeight;
+		this.player2x = width/2;
+		this.w = width/2;
+		this.h = height-topHeight-bottomHeight;
+	}
+	this.resized();
+	
 	this.display = function()
 	{
 		noStroke();
