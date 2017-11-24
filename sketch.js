@@ -30,10 +30,11 @@ function setup() {
 
 function windowResized() 
 {
-	modified = true;
 	resizeCanvas(windowWidth, windowHeight);
 	bottomBox1.resized();
 	Football.resized();
+	badminton.resized();
+	modified = true;
 }
 
 var noSleep;
@@ -68,7 +69,6 @@ function draw() {
 	if (badmintonActivated == true) 
 	{
 		badminton.display();
-		badminton.update();
 		badminton.saet();
 		bottomBox1.display();
 		topBox1.display();
