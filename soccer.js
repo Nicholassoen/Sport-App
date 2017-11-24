@@ -5,15 +5,22 @@ function football()
 	
 	this.i1 = 0;
 	this.i2 = 0;
-	this.player1x = 0;
-	this.playery = topHeight;
-	this.player2x = width/2;
-	this.w = width/2;
-	this.h = height - topHeight - bottomHeight;
 	this.col = color(255, 255, 255);
 	this.col2 = color(255, 255, 255);
 	this.col3 = color(255, 255, 255);
 	this.startTime = 0;
+
+	this.resized = function() {
+		this.player1x = 0;
+		this.playery = topHeight;
+		this.player2x = width/2;
+		this.w = width/2;
+		this.h = height - topHeight - bottomHeight;
+		this.ellipseX = width/2;
+		this.ellipseY = topHeight/2;
+	};
+	this.resized();
+
 	this.display = function()
 	{
 		noStroke();
@@ -70,8 +77,6 @@ function football()
 		if (this.i1 > 0) this.i1--;
 		if (this.i2 > 0) this.i2--;
 	}
-	this.ellipseX = width/2;
-	this.ellipseY = topHeight/2;
 	this.timerStarted = false;
 	this.combinedTimeMin = 0;
 	this.lastTime = 0;
@@ -98,9 +103,9 @@ function football()
 			if (secondText < 10) {
 				secondText = "0" + secondText;
 			}
-			var timeText = Math.floor(combinedTime/60) + " : " + combinedTime%60;
+			var timeText = Math.floor(combinedTime/60) + " : " + secondText;
 		} else {
-			var timeText = "0:00";
+			var timeText = "0 : 00";
 		}
 		text(timeText, this.ellipseX, this.ellipseY);
 		
