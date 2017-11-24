@@ -103,9 +103,9 @@ function football()
 			if (secondText < 10) {
 				secondText = "0" + secondText;
 			}
-			var timeText = Math.floor(combinedTime/60) + " : " + combinedTime%60;
+			var timeText = Math.floor(combinedTime/60) + " : " + secondText;
 		} else {
-			var timeText = "0:00";
+			var timeText = "0 : 00";
 		}
 		text(timeText, this.ellipseX, this.ellipseY);
 		
