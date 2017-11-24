@@ -574,3 +574,16 @@ function boks(x, y, w ,h) {
 		return circleCollision(this.x, this.y, this.w, this.h, mouseX, mouseY, 1, 1);
 	}
 }
+/*if (cc == true) 
+		{
+			badminton.score = 0;
+			badminton.score12 = 0;
+			badminton.score13 = 0;
+			
+			badminton.score2 = 0;
+			badminton.score22 = 0;
+			badminton.score23 = 0;
+			
+			badminton.player1Score = 0;
+			badminton.player2Score = 0;
+		}*/
