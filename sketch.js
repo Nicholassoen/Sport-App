@@ -41,14 +41,16 @@ function enableNoSleep() {
 }
 // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
 document.addEventListener('click', enableNoSleep, false);
-
-function draw() { 
+var mouseDelay = 0;
+function draw() {
 	background(220);
 	fill(255, 255, 255);
 	strokeWeight(1);
+	if (mouseDelay > 0) mouseDelay--;
 	if (showMenu == true)  
 	{
 		startButton1.display();
+		startButton1.resetButton();
 	}
 
 	if (badmintonActivated == true) 
@@ -73,13 +75,12 @@ function draw() {
 		image(surpriseIcon, 200, 200);
 	}
 }
-var mouseDelay = 0;
 function mousePressed()
 {
-	if (mouseDelay < 2) mouseDelay++;
 	if (showMenu == true)
 	{
 		startButton1.collide();
+		startButton1.resetButtonCollide();
 	}
 	
 	if (badmintonActivated == true) 
@@ -90,9 +91,7 @@ function mousePressed()
 	}
 	if (soccerActivated) 
 	{
-		if (mouseDelay == 2) {
-			Football.collide();
-		}
+		Football.collide();
 		Football.collide();
 		bottomBox1.collide();
 		topBox1.collide();
@@ -292,6 +291,24 @@ function startButton()
 			soccerActivated = true;
 		}
 	}
+	
+	var w = 100;
+	var h = 100;
+	var x = width/2;
+	var y = 50;
+	this.resetButton = function() 
+	{
+		fill(255, 255, 255);
+		rect(x-w/2, y, w, h);
+		fill(255, 0, 0);
+		textAlign(CENTER);
+		text("Reset", x+w/12, y+h/2);
+	}
+	this.resetButtonCollide = function() 
+	{
+		var d = cc(x, y, w, h);
+		print(d);
+	}
 }
 var i1 = 0;
 var i2 = 0;
@@ -337,6 +354,7 @@ function Badminton()
 	
 	this.saet = function() 
 	{
+		textSize(100);
 		text(this.score, this.player1x+this.w/2, this.playery*2);
 		text(this.score12, this.player1x+this.w/2, this.playery*3);
 		text(this.score13, this.player1x+this.w/2, this.playery*4);
@@ -346,17 +364,20 @@ function Badminton()
 		text(this.score22, this.player2x+this.w/2, this.playery*3);
 		text(this.score23, this.player2x+this.w/2, this.playery*4);
 		
-		if (this.player1Score == 22 && this.player2Score != 22|| this.player1Score == 33) 
+		if (this.player1Score == 2 && this.player2Score == 1 || this.player1Score == 2 && this.player2Score == 0 || this.player1Score == 3) 
 		{
-			foo.speak("Player 1 won the match");
+			foo.speak(topBox1.leftName + " won the match");
 			textSize(80);
-			text("Player 1 has won the match", width/2, height/21);
+			fill(255, 0, 0);
+			text(topBox1.leftName + " won the match", width/2, height/2);
 		}
 		
-		if (this.player2Score == 22 && this.player1Score < 11|| this.player2Score == 33) 
+		if (this.player2Score == 2 && this.player1Score == 1 || this.player2Score == 2 && this.player1Score == 0 || this.player2Score == 3)
 		{
 			textSize(80);
-			text("Player 2 has won the match", width/2, height/2);
+			fill(255, 0, 0);
+			text(topBox1.rightName + " won the match", width/2, height/2);
+			foo.speak(topBox1.rightName + " won the match");
 		}
 	}
 	
@@ -368,20 +389,30 @@ function Badminton()
 		{
 			if (this.score != 11 && this.score2 != 11) {
 				this.score++;
-				this.player1Score++;
-				foo.speak(this.score + "  " + this.score2 + " to player 1");
+				foo.speak(this.score + "  " + this.score2 + " to " + topBox1.leftName);
+				if (this.score == 11) 
+				{
+					this.player1Score++;
+				}
 			} else if(this.score12 != 11 && this.score22 != 11)
 			{
 				if (this.score == 11) foo.speak("Sæt færdig gjort");
 				this.score12++;
-				this.player1Score++;
-				foo.speak(this.score12 + "  " + this.score22 + " to player 1");
+				foo.speak(this.score12 + "  " + this.score22 + " to " + topBox1.leftName);
+				if (this.score12 == 11) 
+				{
+					this.player1Score++;
+				}
 			} else if(this.score13 != 11 && this.score23 != 11) 
 			{
 				if (this.score12 == 11) foo.speak("Sæt færdig gjort");
 				this.score13++;
 				this.player1Score++;
-				foo.speak(this.score13 + "  " + this.score23 + " to player 1");
+				foo.speak(this.score13 + "  " + this.score23 + " to " + topBox1.leftName);
+				if (this.score13 == 11) 
+				{
+					this.player1Score++;
+				}
 			}
 			i1 = 20;
 			i2 = 20;
@@ -393,20 +424,29 @@ function Badminton()
 		{
 			if (this.score2 != 11 && this.score != 11) {
 				this.score2++;
-				this.player2Score++;
-				foo.speak(this.score2 + "  " + this.score + " to player 2");
+				foo.speak(this.score2 + "  " + this.score + " to " + topBox1.rightName);
+				if (this.score2 == 11) 
+				{
+					this.player2Score++;
+				}
 			} else if(this.score22 != 11 && this.score12 != 11)
 			{
 				if (this.score2 == 11) foo.speak("Sæt færdig gjort");
 				this.score22++;
-				this.player2Score++;
-				foo.speak(this.score22 + "  " + this.score12 + " to player 2");
+				foo.speak(this.score22 + "  " + this.score12 + " to " + topBox1.rightName);
+				if (this.score22 == 11) 
+				{
+					this.player2Score++;
+				}
 			} else if(this.score23 != 11 && this.score13 != 11) 
 			{
 				if (this.score22 == 11) foo.speak("Sæt færdig gjort");
 				this.score23++;
-				this.player2Score++;
-				foo.speak(this.score23 + "  " + this.score13 + " to player 2");
+				foo.speak(this.score23 + "  " + this.score13 + " to " + topBox1.rightName);
+				if (this.score23 == 11) 
+				{
+					this.player2Score++;
+				}
 			}		
 			i2 = 20;
 			i1 = 20;
