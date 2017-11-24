@@ -115,7 +115,7 @@ function mousePressed()
 		bottomBox1.collide();
 		bottomBox1.resetButtonCollide();
 		topBox1.collide();
-	} else (soccerActivated) 
+	} else if (soccerActivated) 
 	{
 		Football.collide();
 		Football.collide();
