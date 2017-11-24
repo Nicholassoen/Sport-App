@@ -7,7 +7,7 @@ var surpriseIcon;
 var surprise = false;
 var timerStarted = true;
 var bottomBox1;
-var showSoccerMenu = false;
+var showSoccerMenu = true;
 function preload()
 {
 	surpriseIcon = loadImage("kartofler.png");
@@ -82,9 +82,8 @@ function draw() {
 		if (showSoccerMenu) {
 			Football.showMenu();
 		}
-	}  else {
-		showSoccerMenu = false;
 	}
+	
 	if (surprise == true) 
 	{
 		image(surpriseIcon, 200, 200);
@@ -122,7 +121,10 @@ function mousePressed()
 		bottomBox1.collide();
 		topBox1.collide();
 		Football.clickedTimer();
-		Football.clickedMenu();
+		if (showSoccerMenu)
+		{
+			Football.clickedMenu();
+		}
 	}
 
 	return false
