@@ -1,3 +1,13 @@
+function bEvent(name, p11, p12, p13, p21, p22, p23) {
+	this.name = name;
+	this.p11 = p11;
+	this.p12 = p12;
+	this.p13 = p13;
+	this.p21 = p21;
+	this.p22 = p22;
+	this.p23 = p23;
+}
+
 function Badminton()
 {
 	this.score = 0;
@@ -85,9 +95,11 @@ function Badminton()
 
 		var clicked = false;
 		if (cc(this.player1x, this.playery, this.w, this.h)) {
+			this.addEvent();
 			this.clickLeft();
 			clicked = true;
 		} else if (cc(this.player2x, this.playery, this.w, this.h)) {
+			this.addEvent();
 			this.clickRight();
 			clicked = true;
 		}
@@ -162,6 +174,69 @@ function Badminton()
 			}
 		}		
 		this.col2 = color(255, 0, 0);
+	}
+
+
+	this.reset = function() {
+		this.addEvent();
+		
+		badminton.score = 0;
+		badminton.score12 = 0;
+		badminton.score13 = 0;
+				
+		badminton.score2 = 0;
+		badminton.score22 = 0;
+		badminton.score23 = 0;
+				
+		badminton.player1Score = 0;
+		badminton.player2Score = 0;
+	}
+	
+	/*Event queue functions */
+	this.eventQ = [];
+	this.eventQRedo = [];
+
+	this.getState = function() {
+		var e = new bEvent("point",
+				   this.score, this.score12, this.score13,
+				   this.score2, this.score22, this.score23
+				  );
+		return e;
+	}
+	
+	this.addEvent = function() {
+		var e = this.getState();
+		this.eventQ.push(e);
+	}
+	this.addEvent(); //Initial state (0-0)
+
+	this.applyE = function(e) {
+		this.score = e.p11;
+		this.score12 = e.p12;
+		this.score13 = e.p13;
+		this.score21 = e.p21;
+		this.score22 = e.p22;
+		this.score23 = e.p23;
+	}
+
+	this.undo = function() {
+		if (this.eventQ.length > 0) {
+			var eNow = this.getState();
+			this.eventQRedo.push(eNow);
+			var e = this.eventQ.pop();
+			this.applyE(e);
+		}
+	}
+
+	this.redo = function() {
+		console.log("here3");
+		if (this.eventQRedo.length > 0) {
+			console.log("here4");
+			var eNow = this.getState();
+			this.eventQ.push(eNow);
+			var e = this.eventQRedo.pop();
+			this.applyE(e);
+		}		
 	}
 }
 
