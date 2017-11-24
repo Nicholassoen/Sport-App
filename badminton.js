@@ -1,5 +1,3 @@
-var i1 = 0;
-var i2 = 0;
 function Badminton()
 {
 	this.score = 0;
@@ -68,92 +66,95 @@ function Badminton()
 			foo.speak(topBox1.rightName + " won the match");
 		}
 	}
-	
+
+	this.doubleClickDisabled = false;
 	this.collide = function()
 	{
-		var c = circleCollision(this.player1x, this.playery, this.w, this.h,
-												 mouseX, mouseY, 1, 1);
-		if (c == true && i1 == 0 && i2 == 0)
-		{
-			if (this.score != 11 && this.score2 != 11) {
-				this.score++;
-				foo.speak(this.score + "  " + this.score2 + " to " + topBox1.leftName);
-				if (this.score == 11) 
-				{
-					this.player1Score++;
-				}
-			} else if(this.score12 != 11 && this.score22 != 11)
-			{
-				if (this.score == 11) foo.speak("Sæt færdig gjort");
-				this.score12++;
-				foo.speak(this.score12 + "  " + this.score22 + " to " + topBox1.leftName);
-				if (this.score12 == 11) 
-				{
-					this.player1Score++;
-				}
-			} else if(this.score13 != 11 && this.score23 != 11) 
-			{
-				if (this.score12 == 11) foo.speak("Sæt færdig gjort");
-				this.score13++;
-				this.player1Score++;
-				foo.speak(this.score13 + "  " + this.score23 + " to " + topBox1.leftName);
-				if (this.score13 == 11) 
-				{
-					this.player1Score++;
-				}
-			}
-			i1 = 20;
-			i2 = 20;
-			this.col = color(255, 0, 0);
+		if (this.doubleClickDisabled) {
+			return;
 		}
-		var c2 = circleCollision(this.player2x, this.playery, this.w, this.h,
-												 mouseX, mouseY, 1, 1);
-		if (c2 == true && i2 == 0 && i1 == 0)
-		{
-			if (this.score2 != 11 && this.score != 11) {
-				this.score2++;
-				foo.speak(this.score2 + "  " + this.score + " to " + topBox1.rightName);
-				if (this.score2 == 11) 
-				{
-					this.player2Score++;
-				}
-			} else if(this.score22 != 11 && this.score12 != 11)
-			{
-				if (this.score2 == 11) foo.speak("Sæt færdig gjort");
-				this.score22++;
-				foo.speak(this.score22 + "  " + this.score12 + " to " + topBox1.rightName);
-				if (this.score22 == 11) 
-				{
-					this.player2Score++;
-				}
-			} else if(this.score23 != 11 && this.score13 != 11) 
-			{
-				if (this.score22 == 11) foo.speak("Sæt færdig gjort");
-				this.score23++;
-				foo.speak(this.score23 + "  " + this.score13 + " to " + topBox1.rightName);
-				if (this.score23 == 11) 
-				{
-					this.player2Score++;
-				}
-			}		
-			i2 = 20;
-			i1 = 20;
-			this.col2 = color(255, 0, 0);
+
+		var clicked = false;
+		if (cc(this.player1x, this.playery, this.w, this.h)) {
+			this.clickLeft();
+			clicked = true;
+		} else if (cc(this.player2x, this.playery, this.w, this.h)) {
+			this.clickRight();
+			clicked = true;
+		}
+
+		if (clicked) {
+			this.doubleClickDisabled = true;
+			var that = this;
+			setTimeout(function() {that.doubleClickDisabled=false;}, 100);
+			setTimeout(function() {
+				console.log("called");
+				that.col = color(255, 255, 255);
+				that.col2 = color(255, 255, 255);
+				modified = true;
+			}, 300);
 		}
 	}
-	
-	this.update = function() 
-	{
-		if (i1 == 0) 
+
+	this.clickLeft = function() {
+		if (this.score != 11 && this.score2 != 11) {
+			this.score++;
+			foo.speak(this.score + "  " + this.score2 + " to " + topBox1.leftName);
+			if (this.score == 11) 
+			{
+				this.player1Score++;
+			}
+		} else if(this.score12 != 11 && this.score22 != 11)
 		{
-			this.col = color(255, 255, 255);
-		}
-		if (i2 == 0) 
+			if (this.score == 11) foo.speak("Sæt færdig gjort");
+			this.score12++;
+			foo.speak(this.score12 + "  " + this.score22 + " to " + topBox1.leftName);
+			if (this.score12 == 11) 
+			{
+				this.player1Score++;
+			}
+		} else if(this.score13 != 11 && this.score23 != 11) 
 		{
-			this.col2 = color(255, 255, 255);
+			if (this.score12 == 11) foo.speak("Sæt færdig gjort");
+			this.score13++;
+			this.player1Score++;
+			foo.speak(this.score13 + "  " + this.score23 + " to " + topBox1.leftName);
+			if (this.score13 == 11) 
+			{
+				this.player1Score++;
+			}
 		}
-		if (i1 > 0) i1--;
-		if (i2 > 0) i2--;
+		this.col = color(255, 0, 0);
+	}
+
+	this.clickRight = function() {
+		if (this.score2 != 11 && this.score != 11) {
+			this.score2++;
+			foo.speak(this.score2 + "  " + this.score + " to " + topBox1.rightName);
+			if (this.score2 == 11) 
+			{
+				this.player2Score++;
+			}
+		} else if(this.score22 != 11 && this.score12 != 11)
+		{
+			if (this.score2 == 11) foo.speak("Sæt færdig gjort");
+			this.score22++;
+			foo.speak(this.score22 + "  " + this.score12 + " to " + topBox1.rightName);
+			if (this.score22 == 11) 
+			{
+				this.player2Score++;
+			}
+		} else if(this.score23 != 11 && this.score13 != 11) 
+		{
+			if (this.score22 == 11) foo.speak("Sæt færdig gjort");
+			this.score23++;
+			foo.speak(this.score23 + "  " + this.score13 + " to " + topBox1.rightName);
+			if (this.score23 == 11) 
+			{
+				this.player2Score++;
+			}
+		}		
+		this.col2 = color(255, 0, 0);
 	}
 }
 

@@ -68,7 +68,6 @@ function draw() {
 	if (badmintonActivated == true) 
 	{
 		badminton.display();
-		badminton.update();
 		badminton.saet();
 		bottomBox1.display();
 		topBox1.display();
