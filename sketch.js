@@ -351,7 +351,7 @@ function startButton()
 	}
 	this.resetButtonCollide = function() 
 	{
-		var d = cc(width/2-w/2, 50, 100, 100);
+		var d = cc(bottomBox1.boxCenterRight.x, bottomBox1.boxCenterRight.y, bottomBox1.boxCenterRight.w, bottomBox1.boxCenterRight.h);
 		print(d);
 		if (d == true)
 		{
