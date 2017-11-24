@@ -44,7 +44,6 @@ function enableNoSleep() {
 }
 // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
 document.addEventListener('click', enableNoSleep, false);
-var mouseDelay = 0;
 var modified = true;
 function draw() {
 	if (!modified) {
@@ -59,7 +58,6 @@ function draw() {
 	background(220);
 	fill(255, 255, 255);
 	strokeWeight(1);
-	if (mouseDelay > 0) mouseDelay--;
 	if (showMenu == true)  
 	{
 		startButton1.display();
@@ -87,23 +85,32 @@ function draw() {
 		image(surpriseIcon, 200, 200);
 	}
 }
+
+/* */
+mouseDisabled = false;
+function disableMousePressed(ms) {
+	mouseDisabled = true;
+	setTimeout(function() {mouseDisabled=false;}, ms);
+}
+
+
 function mousePressed()
 {
+	if (mouseDisabled) {
+		return;
+	}
+	
 	modified = true;
-	if (mouseDelay < 2) mouseDelay++;
 	if (showMenu == true)
 	{
 		startButton1.collide();
-	}
-	
-	if (badmintonActivated == true) 
+	} else if (badmintonActivated == true) 
 	{
 		badminton.collide();
 		bottomBox1.collide();
 		bottomBox1.resetButtonCollide();
 		topBox1.collide();
-	}
-	if (soccerActivated) 
+	} else (soccerActivated) 
 	{
 		Football.collide();
 		Football.collide();
@@ -292,17 +299,24 @@ function startButton()
 	
 	this.collide = function() 
 	{
+		var changed = false;
 		var c = circleCollision(this.x, this.y/2, this.w, this.h, mouseX, mouseY, 1, 10);
 		if (c == true) 
 		{
 			showMenu = false;
 			badmintonActivated = true;
+			changed = true;
 		}
 		var cs = cc(this.x*6, this.y/2, this.w, this.h);
 		if (cs == true) 
 		{
 			showMenu = false;
 			soccerActivated = true;
+			changed = true;
+		}
+
+		if (changed) {
+			disableMousePressed(1000);
 		}
 	}
 	
