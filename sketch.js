@@ -24,7 +24,7 @@ function setup() {
 	bottomBox1 = new bottomBox();
 	foo = new p5.Speech();
 	foo.speak("Voice initialized");
-	
+	frameRate(30);
 }
 
 function windowResized() 
@@ -43,6 +43,17 @@ function enableNoSleep() {
 document.addEventListener('click', enableNoSleep, false);
 var mouseDelay = 0;
 function draw() {
+var modified = true;
+function draw() {
+	if (!modified) {
+		if (!(soccerActivated && Football.timeTextOutdated())) {
+			//console.log("not updating");
+			return;			
+		}
+	}
+	modified = false;
+	//console.log("updating");
+	
 	background(220);
 	fill(255, 255, 255);
 	strokeWeight(1);
@@ -77,6 +88,8 @@ function draw() {
 }
 function mousePressed()
 {
+	modified = true;
+	if (mouseDelay < 2) mouseDelay++;
 	if (showMenu == true)
 	{
 		startButton1.collide();

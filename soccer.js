@@ -74,18 +74,26 @@ function football()
 	this.ellipseX = width/2;
 	this.ellipseY = topHeight/2;
 	this.combinedTimeMin = 0;
+	this.lastTime = 0;
+	this.timeTextOutdated = function() {
+		var d = new Date();
+		console.log(round(d.getTime()/1000) +"!="+ this.lastTime);
+		return round(d.getTime()/1000) != this.lastTime;
+	};
+	
 	this.timer = function() 
 	{
 		fill(this.col3);
 		ellipse(this.ellipseX, this.ellipseY, 120);
 		fill(255, 255, 255);
-		var data = new Date();
-		var n = data.getTime();
-		var present = round(data.getTime()/1000);
-		var combinedTime = (present-this.startTime)*60;
+		var date = new Date();
+		var n = date.getTime();
+		this.lastTime = round(date.getTime()/1000);
+		var combinedTime = (this.lastTime-this.startTime);
 		textAlign(CENTER);
 		textSize(20);
-		text(Math.floor(combinedTime/60) + " : " + combinedTime%60, this.ellipseX, this.ellipseY);
+		var timeText = Math.floor(combinedTime/60) + " : " + combinedTime%60;
+		text(timeText, this.ellipseX, this.ellipseY);
 		
 		if (Math.floor(combinedTime/60) >= 45)
 		{
@@ -98,9 +106,9 @@ function football()
 	{
 		var d = dist(this.ellipseX, this.ellipseY, mouseX, mouseY);
 		if (d < 120) {
-			var datas = new Date();
-			var ne = datas.getTime();
-			this.startTime = round(datas.getTime()/1000);
+			var date = new Date();
+			var ne = date.getTime();
+			this.startTime = round(date.getTime()/1000);
 			this.combinedTimeMin = 0;
 		}
 	}
