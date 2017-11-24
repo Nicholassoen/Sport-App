@@ -501,7 +501,6 @@ function bottomBox() {
 		this.makeBoxes();
 	}
 	
-	this.display = function() 
 	this.collide = function() 
 	{
 		if (this.boxCenter.cc()) {
