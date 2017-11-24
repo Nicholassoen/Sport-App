@@ -29,8 +29,10 @@ function setup() {
 
 function windowResized() 
 {
+	modified = true;
 	resizeCanvas(windowWidth, windowHeight);
 	bottomBox1.resized();
+	Football.resized();
 }
 
 var noSleep;
