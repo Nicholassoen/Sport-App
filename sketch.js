@@ -62,7 +62,6 @@ function draw() {
 	if (showMenu == true)  
 	{
 		startButton1.display();
-		startButton1.resetButton();
 	}
 
 	if (badmintonActivated == true) 
@@ -71,6 +70,7 @@ function draw() {
 		badminton.saet();
 		bottomBox1.display();
 		topBox1.display();
+		bottomBox1.resetButton();
 	}
 	if (soccerActivated == true) 
 	{
@@ -93,13 +93,13 @@ function mousePressed()
 	if (showMenu == true)
 	{
 		startButton1.collide();
-		startButton1.resetButtonCollide();
 	}
 	
 	if (badmintonActivated == true) 
 	{
 		badminton.collide();
 		bottomBox1.collide();
+		bottomBox1.resetButtonCollide();
 		topBox1.collide();
 	}
 	if (soccerActivated) 
@@ -315,20 +315,37 @@ function startButton()
 		rect(x-w/2, y, w, h);
 		fill(255, 0, 0);
 		textAlign(CENTER);
-		text("Reset", x+w/12, y+h/2);
+		text("Reset", width/2, y+h/2);
 	}
 	this.resetButtonCollide = function() 
 	{
 		var d = cc(x, y, w, h);
 		print(d);
+		if (cc == true) 
+		{
+			badminton.score = 0;
+			badminton.score12 = 0;
+			badminton.score13 = 0;
+			
+			badminton.score2 = 0;
+			badminton.score22 = 0;
+			badminton.score23 = 0;
+			
+			badminton.player1Score = 0;
+			badminton.player2Score = 0;
+			
+			
+		}
+		
 	}
 }
 var bottomHeight = 150;
 function bottomBox() {
 	this.makeBoxes = function() {
-		this.boxLeft = new boks(0, height-bottomHeight, width/3, bottomHeight);
-		this.boxCenter = new boks(width/3, height-bottomHeight, width/3, bottomHeight);
-		this.boxRight = new boks(2*width/3, height-bottomHeight, width/3, bottomHeight);
+		this.boxLeft = new boks(0, height-bottomHeight, width/4, bottomHeight);
+		this.boxCenter = new boks(width/4, height-bottomHeight, width/3, bottomHeight);
+		this.boxCenterRight = new boks(2*width/4, height-bottomHeight, width/4, bottomHeight);
+		this.boxRight = new boks(3*width/4, height-bottomHeight, width/3, bottomHeight);
 
 		var margin = min(width, bottomHeight)/10;
 		this.boxLeftM = this.boxLeft.addMargin(margin);
@@ -336,11 +353,6 @@ function bottomBox() {
 		this.boxRightM = this.boxRight.addMargin(margin);
 	}
 	this.makeBoxes();
-
-	this.resized = function() {
-		this.makeBoxes();
-	}
-	
 	this.display = function() 
 	{
 		//line on top of bottom box
@@ -360,7 +372,9 @@ function bottomBox() {
 		//Redo button
 		ourTriangle(this.boxRightM, false);
 	}
-	
+	this.resized = function() {
+		this.makeBoxes();
+	}
 	this.collide = function() 
 	{
 		if (this.boxCenter.cc()) {
@@ -368,6 +382,34 @@ function bottomBox() {
 			badmintonActivated = false;
 			soccerActivated = false;
 		}
+	}
+	
+	this.resetButton = function() 
+	{
+		fill(255, 255, 255);
+		rect(this.boxCenterRight.x, this.boxCenterRight.y, this.boxCenterRight.w, this.boxCenterRight.h);
+		fill(255, 0, 0);
+		textAlign(CENTER);
+		text("Reset", this.boxCenterRight.x+this.boxCenterRight.w/2, this.boxCenterRight.y+this.boxCenterRight.h/2);
+	}
+	this.resetButtonCollide = function() 
+	{
+		if (this.boxCenterRight == true) 
+		{
+			badminton.score = 0;
+			badminton.score12 = 0;
+			badminton.score13 = 0;
+			
+			badminton.score2 = 0;
+			badminton.score22 = 0;
+			badminton.score23 = 0;
+			
+			badminton.player1Score = 0;
+			badminton.player2Score = 0;
+			
+			
+		}
+		
 	}
 }
 

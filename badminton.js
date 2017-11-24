@@ -117,13 +117,12 @@ function Badminton()
 		{
 			if (this.score12 == 11) foo.speak("Sæt færdig gjort");
 			this.score13++;
-			this.player1Score++;
 			foo.speak(this.score13 + "  " + this.score23 + " to " + topBox1.leftName);
 			if (this.score13 == 11) 
 			{
 				this.player1Score++;
 			}
-		}
+		}		
 		this.col = color(255, 0, 0);
 	}
 
