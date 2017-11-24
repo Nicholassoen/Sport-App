@@ -46,14 +46,18 @@ function Badminton()
 	this.saet = function() 
 	{
 		textSize(height/10);
-		text(this.score, this.player1x+this.w/2, this.playery*2);
-		text(this.score12, this.player1x+this.w/2, this.playery*3);
-		text(this.score13, this.player1x+this.w/2, this.playery*4);
+		offset1 = this.playery + 2*this.h/10;
+		offset2 = this.playery + 5*this.h/10;
+		offset3 = this.playery + 8*this.h/10;
+		
+		text(this.score, this.player1x+this.w/2, offset1);
+		text(this.score12, this.player1x+this.w/2, offset2);
+		text(this.score13, this.player1x+this.w/2, offset3);
 		
 		
-		text(this.score2, this.player2x+this.w/2, this.playery*2);
-		text(this.score22, this.player2x+this.w/2, this.playery*3);
-		text(this.score23, this.player2x+this.w/2, this.playery*4);
+		text(this.score2, this.player2x+this.w/2, offset1);
+		text(this.score22, this.player2x+this.w/2, offset2);
+		text(this.score23, this.player2x+this.w/2, offset3);
 		
 		if (this.player1Score == 2 && this.player2Score == 1 || this.player1Score == 2 && this.player2Score == 0 || this.player1Score == 3) 
 		{
